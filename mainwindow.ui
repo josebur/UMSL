@@ -106,6 +106,8 @@
      <string>Study</string>
     </property>
     <addaction name="actionEditStudyScenes"/>
+    <addaction name="separator"/>
+    <addaction name="actionAddNewStudy"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuStudy"/>
@@ -119,6 +121,11 @@
   <action name="actionEditStudyScenes">
    <property name="text">
     <string>Edit Study's Scenes</string>
+   </property>
+  </action>
+  <action name="actionAddNewStudy">
+   <property name="text">
+    <string>Add New Study</string>
    </property>
   </action>
  </widget>

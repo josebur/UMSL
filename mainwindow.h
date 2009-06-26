@@ -37,6 +37,8 @@ public:
 public Q_SLOTS:
 
 private Q_SLOTS:
+    void addNewStudy();
+    void setNewStudyName(int row, QSqlRecord &record);
     void editStudyScenes();
     void updateActions(const QModelIndex &index);
 

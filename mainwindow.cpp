@@ -63,11 +63,30 @@ MainWindow::MainWindow(QWidget *parent)
             this, SLOT(updateActions(QModelIndex)));
     connect(m_ui.studyListView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateActions(QModelIndex)));
     connect(m_ui.actionEditStudyScenes, SIGNAL(triggered()), this, SLOT(editStudyScenes()));
+    connect(m_ui.actionAddNewStudy, SIGNAL(triggered()), this, SLOT(addNewStudy()));
+    connect(m_studyListModel, SIGNAL(primeInsert(int,QSqlRecord&)),
+            this, SLOT(setNewStudyName(int, QSqlRecord&)));
 }
 
 MainWindow::~MainWindow()
 {
     delete m_studyListModel;
+}
+
+void MainWindow::addNewStudy()
+{
+    const int rowCount = m_studyListModel->rowCount();
+    m_studyListModel->insertRows(rowCount, 1);
+}
+
+// FIXME: Make sure that there aren't multiple studies with the same name.
+//        So there needs to be "New Study N" where N is the smallest number
+//        that hasn't been used.
+void MainWindow::setNewStudyName(int row, QSqlRecord &record)
+{
+    Q_UNUSED(row);
+
+    record.setValue(1, "New Study");
 }
 
 void MainWindow::editStudyScenes()
