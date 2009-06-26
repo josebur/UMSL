@@ -1,19 +1,15 @@
 #ifndef STUDYLISTMODEL_H
 #define STUDYLISTMODEL_H
 
-#include <QSqlQueryModel>
+#include <QModelIndex>
 #include <QSqlDatabase>
+#include <QSqlTableModel>
 
-class StudyListModel : public QSqlQueryModel
+class StudyListModel : public QSqlTableModel
 {
 public:
-    StudyListModel(QSqlDatabase *database, QObject *parent = 0);
+    StudyListModel(QObject *parent = 0, QSqlDatabase database = QSqlDatabase());
     ~StudyListModel();
-
-    QSqlDatabase *database() const;
-
-private:
-    QSqlDatabase *m_database;
 };
 
 #endif // STUDYLISTMODEL_H

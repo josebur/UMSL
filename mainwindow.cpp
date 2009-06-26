@@ -54,12 +54,15 @@ MainWindow::MainWindow(QWidget *parent)
                               "Unable to connect to database");
     }
 
-    m_studyListModel = new StudyListModel(&m_database);
+    m_studyListModel = new StudyListModel(0, m_database);
     m_ui.studyListView->setModel(m_studyListModel);
+    m_ui.studyListView->setModelColumn(1);
     m_currentStudy = 0;
 
+    connect(m_studyListModel, SIGNAL(dataChanged(const QModelIndex, const QModelIndex)),
+            this, SLOT(updateActions(QModelIndex)));
     connect(m_ui.studyListView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateActions(QModelIndex)));
-    connect(m_ui.actionEditStudyScenes, SIGNAL(triggered()), this, SLOT(editStudy()));
+    connect(m_ui.actionEditStudyScenes, SIGNAL(triggered()), this, SLOT(editStudyScenes()));
 }
 
 MainWindow::~MainWindow()
@@ -67,7 +70,7 @@ MainWindow::~MainWindow()
     delete m_studyListModel;
 }
 
-void MainWindow::editStudy()
+void MainWindow::editStudyScenes()
 {
     StudySceneEditor editor(m_currentStudy, &m_database);
     editor.exec();

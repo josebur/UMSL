@@ -1,16 +1,16 @@
 #include "studylistmodel.h"
 
+#include <QDebug>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
 
-StudyListModel::StudyListModel(QSqlDatabase *database, QObject *parent)
-    : QSqlQueryModel(parent), m_database(database)
+StudyListModel::StudyListModel(QObject *parent, QSqlDatabase database)
+    : QSqlTableModel(parent, database)
 {
-    setQuery("select name from studies", *m_database);
+    setTable("studies");
+    select();
 }
 
 StudyListModel::~StudyListModel()
 {
-    delete m_database;
 }
-

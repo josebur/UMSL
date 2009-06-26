@@ -37,7 +37,7 @@ public:
 public Q_SLOTS:
 
 private Q_SLOTS:
-    void editStudy();
+    void editStudyScenes();
     void updateActions(const QModelIndex &index);
 
 private:
