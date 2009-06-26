@@ -27,6 +27,7 @@
 #include <QDebug>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QSplitter>
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
@@ -35,12 +36,18 @@
 #include <QSqlRelationalTableModel>
 #include <QTableView>
 
+#include <QStylePlugin>
+
 #include "phidget21.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     m_ui.setupUi(this);
+    QSplitter *page = new QSplitter(parent);
+    page->addWidget(m_ui.studiesWidget);
+    page->addWidget(m_ui.mainWidget);
+    setCentralWidget(page);
 
     if (!connectToDatabase()) {
         QMessageBox::critical(this, "Database Error",
