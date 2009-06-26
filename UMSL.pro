@@ -11,13 +11,15 @@ SOURCES += main.cpp \
     study.cpp \
     studysceneeditor.cpp \
     studyscenedelegate.cpp \
-    studyscenemodel.cpp
+    studyscenemodel.cpp \
+    studylistmodel.cpp
 HEADERS += mainwindow.h \
     scene.h \
     study.h \
     queries.h \
     studysceneeditor.h \
     studyscenedelegate.h \
-    studyscenemodel.h
+    studyscenemodel.h \
+    studylistmodel.h
 FORMS += mainwindow.ui \
     studysceneeditor.ui

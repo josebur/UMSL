@@ -63,7 +63,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QGraphicsView" name="graphicsView">
+        <widget class="QGraphicsView" name="studyTimeLine">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -105,6 +105,7 @@
     <property name="title">
      <string>Study</string>
     </property>
+    <addaction name="actionEditStudyScenes"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuStudy"/>
@@ -113,6 +114,11 @@
   <action name="actionQuit">
    <property name="text">
     <string>&amp;Quit</string>
+   </property>
+  </action>
+  <action name="actionEditStudyScenes">
+   <property name="text">
+    <string>Edit Study's Scenes</string>
    </property>
   </action>
  </widget>

@@ -35,7 +35,7 @@ class Study : public QObject
 {
     Q_OBJECT
 public:
-    Study(const QString name = QString(), int pollingInterval = 5);
+    Study(const QString name = QString(), int pollingInterval = 1);
     ~Study();
 
     /**

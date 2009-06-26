@@ -21,11 +21,13 @@
 
 #include "scene.h"
 #include "study.h"
+#include "studylistmodel.h"
 #include "studysceneeditor.h"
 #include "queries.h"
 
 #include <QDebug>
 #include <QFileInfo>
+#include <QGraphicsScene>
 #include <QMessageBox>
 #include <QSplitter>
 #include <QSqlDatabase>
@@ -35,8 +37,6 @@
 #include <QSqlRelationalDelegate>
 #include <QSqlRelationalTableModel>
 #include <QTableView>
-
-#include <QStylePlugin>
 
 #include "phidget21.h"
 
@@ -54,23 +54,36 @@ MainWindow::MainWindow(QWidget *parent)
                               "Unable to connect to database");
     }
 
-    //connect(m_ui.createStudyButton, SIGNAL(clicked()), this, SLOT(createStudy()));
+    m_studyListModel = new StudyListModel(&m_database);
+    m_ui.studyListView->setModel(m_studyListModel);
+    m_currentStudy = 0;
+
+    connect(m_ui.studyListView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateActions(QModelIndex)));
+    connect(m_ui.actionEditStudyScenes, SIGNAL(triggered()), this, SLOT(editStudy()));
 }
 
 MainWindow::~MainWindow()
 {
-
+    delete m_studyListModel;
 }
 
-void MainWindow::createStudy()
+void MainWindow::editStudy()
 {
-    //QString studyName = m_ui.studyLineEdit->text();
-    Study *study;
-//    if (studyName != QString()) {
-//        study = new Study(studyName);
-//        StudySceneEditor *editor = new StudySceneEditor(study, &m_database);
-//        editor->show();
-//    }
+    StudySceneEditor editor(m_currentStudy, &m_database);
+    editor.exec();
+}
+
+void MainWindow::updateActions(const QModelIndex &index)
+{
+    if (index.isValid()) {
+        const QString name = index.data().toString();
+        if (m_currentStudy != 0) {
+            delete m_currentStudy;
+        }
+        m_currentStudy = new Study(name);
+
+        m_ui.actionEditStudyScenes->setText(QString("Edit %1's Scenes").arg(name));
+    }
 }
 
 bool MainWindow::connectToDatabase()
