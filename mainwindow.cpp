@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
                               "Unable to connect to database");
     }
 
-    connect(m_ui.createStudyButton, SIGNAL(clicked()), this, SLOT(createStudy()));
+    //connect(m_ui.createStudyButton, SIGNAL(clicked()), this, SLOT(createStudy()));
 }
 
 MainWindow::~MainWindow()
@@ -57,13 +57,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::createStudy()
 {
-    QString studyName = m_ui.studyLineEdit->text();
+    //QString studyName = m_ui.studyLineEdit->text();
     Study *study;
-    if (studyName != QString()) {
-        study = new Study(studyName);
-        StudySceneEditor *editor = new StudySceneEditor(study, &m_database);
-        editor->show();
-    }
+//    if (studyName != QString()) {
+//        study = new Study(studyName);
+//        StudySceneEditor *editor = new StudySceneEditor(study, &m_database);
+//        editor->show();
+//    }
 }
 
 bool MainWindow::connectToDatabase()
