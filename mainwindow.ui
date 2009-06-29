@@ -6,58 +6,128 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>328</width>
-    <height>348</height>
+    <width>790</width>
+    <height>512</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Not at all final!</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLineEdit" name="studyLineEdit"/>
-      </item>
-      <item>
-       <widget class="QPushButton" name="createStudyButton">
-        <property name="text">
-         <string>Create Study</string>
-        </property>
-        <property name="shortcut">
-         <string>Return</string>
-        </property>
-        <property name="autoDefault">
-         <bool>true</bool>
-        </property>
-        <property name="default">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-   </layout>
+   <widget class="QWidget" name="studiesWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>264</width>
+      <height>226</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Studies</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QListView" name="studyListView"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="mainWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>20</y>
+      <width>451</width>
+      <height>361</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QToolButton" name="toolButton">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="toolButton_2">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGraphicsView" name="studyTimeLine">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>25</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QTextEdit" name="textEdit"/>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>328</width>
+     <width>790</width>
      <height>28</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuStudy">
+    <property name="title">
+     <string>Study</string>
+    </property>
+    <addaction name="actionEditStudyScenes"/>
+    <addaction name="separator"/>
+    <addaction name="actionAddNewStudy"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuStudy"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionQuit">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+  </action>
+  <action name="actionEditStudyScenes">
+   <property name="text">
+    <string>Edit Study's Scenes</string>
+   </property>
+  </action>
+  <action name="actionAddNewStudy">
+   <property name="text">
+    <string>Add New Study</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

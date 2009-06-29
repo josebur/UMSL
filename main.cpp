@@ -22,6 +22,7 @@
 
 int main(int argc, char *argv[])
 {
+    QApplication::setStyle("cleanlooks");
     QApplication a(argc, argv);
     MainWindow w;
     w.show();

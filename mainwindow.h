@@ -24,6 +24,9 @@
 
 #include <QSqlDatabase>
 
+class Study;
+class StudyListModel;
+
 class MainWindow : public QMainWindow {
     Q_OBJECT
     Q_DISABLE_COPY(MainWindow)
@@ -32,12 +35,19 @@ public:
     ~MainWindow();
 
 public Q_SLOTS:
-    void createStudy();
+
+private Q_SLOTS:
+    void addNewStudy();
+    void setNewStudyName(int row, QSqlRecord &record);
+    void editStudyScenes();
+    void updateActions(const QModelIndex &index);
 
 private:
     bool connectToDatabase();
 
     QSqlDatabase m_database;
+    StudyListModel *m_studyListModel;
+    Study *m_currentStudy;
     Ui::MainWindow m_ui;
 };
 
