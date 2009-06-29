@@ -57,7 +57,14 @@ MainWindow::MainWindow(QWidget *parent)
     m_studyListModel = new StudyListModel(0, m_database);
     m_ui.studyListView->setModel(m_studyListModel);
     m_ui.studyListView->setModelColumn(1);
+
     m_currentStudy = 0;
+
+    QModelIndex index = m_studyListModel->index(0, 1);
+    if (index.isValid()) {
+        m_ui.studyListView->setCurrentIndex(index);
+        updateActions(index);
+    }
 
     connect(m_studyListModel, SIGNAL(dataChanged(const QModelIndex, const QModelIndex)),
             this, SLOT(updateActions(QModelIndex)));
@@ -66,6 +73,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_ui.actionAddNewStudy, SIGNAL(triggered()), this, SLOT(addNewStudy()));
     connect(m_studyListModel, SIGNAL(primeInsert(int,QSqlRecord&)),
             this, SLOT(setNewStudyName(int, QSqlRecord&)));
+    connect(m_ui.actionQuit, SIGNAL(triggered()), this, SLOT(close()));
 }
 
 MainWindow::~MainWindow()
