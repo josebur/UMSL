@@ -54,21 +54,6 @@ StudySceneEditor::StudySceneEditor(Study *study, QSqlDatabase *database, QWidget
     if (query.exec() && query.next()) {
          m_studyIndex = query.value(0).toInt();
     }
-    // otherwise insert a new study in the database
-    // May not need to do this here ... should be the job of the main window
-    // Good for current testing purposes
-    else {
-        query.prepare("insert into studies (name, pollingInterval) values (?, ?)");
-        query.addBindValue(m_study->name());
-        query.addBindValue(m_study->pollingInterval());
-        query.exec();
-
-        query.prepare("select id from studies where name = ?");
-        query.addBindValue(m_study->name());
-        if (query.exec() && query.next()) {
-            m_studyIndex = query.value(0).toInt();
-        }
-    }
 
     m_model->setTable("scenes");
     //m_model->setEditStrategy(QSqlTableModel::OnFieldChange);
