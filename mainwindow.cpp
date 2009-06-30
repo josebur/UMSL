@@ -27,7 +27,9 @@
 
 #include <QDebug>
 #include <QFileInfo>
+#include <QGraphicsLinearLayout>
 #include <QGraphicsScene>
+#include <QGraphicsWidget>
 #include <QMessageBox>
 #include <QSplitter>
 #include <QSqlDatabase>

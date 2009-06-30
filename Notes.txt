@@ -17,3 +17,12 @@ Notes
 * Two Files ... Raw Data and then optional averaging data.
 * How to handle scenes that that aren't divisable by averaging interval?
 * Be able to pause study.
+
+Drawing Calculations
+--------------------
+total number of seconds = 60
+total width in pixels = 100
+
+pixels per second = 100 / 60 = 1.6666666666666667
+
+scene.length() == 10 --> pixels wide = 10 * 1.6666666666666667
