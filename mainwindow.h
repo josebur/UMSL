@@ -39,9 +39,11 @@ public Q_SLOTS:
 private Q_SLOTS:
     void studyChanged(const QModelIndex &index);
     void addNewStudy();
+    void removeStudy();
     void setNewStudyName(int row, QSqlRecord &record);
     void editStudyScenes();
     void updateActions(const QString &studyName);
+    void showStudyMenu(QPoint point);
 
 private:
     bool connectToDatabase();

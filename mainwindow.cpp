@@ -59,6 +59,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_studyListModel = new StudyListModel(0, m_database);
     m_ui.studyListView->setModel(m_studyListModel);
     m_ui.studyListView->setModelColumn(1);
+    m_ui.studyListView->setContextMenuPolicy(Qt::CustomContextMenu);
 
     m_currentStudy = 0;
 
@@ -71,8 +72,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_studyListModel, SIGNAL(dataChanged(const QModelIndex, const QModelIndex)),
             this, SLOT(studyChanged(QModelIndex)));
     connect(m_ui.studyListView, SIGNAL(clicked(QModelIndex)), this, SLOT(studyChanged(QModelIndex)));
+    connect(m_ui.studyListView, SIGNAL(customContextMenuRequested(QPoint)),
+            this, SLOT(showStudyMenu(QPoint)));
     connect(m_ui.actionEditStudyScenes, SIGNAL(triggered()), this, SLOT(editStudyScenes()));
     connect(m_ui.actionAddNewStudy, SIGNAL(triggered()), this, SLOT(addNewStudy()));
+    connect(m_ui.actionRemoveStudy, SIGNAL(triggered()), this, SLOT(removeStudy()));
     connect(m_studyListModel, SIGNAL(primeInsert(int,QSqlRecord&)),
             this, SLOT(setNewStudyName(int, QSqlRecord&)));
     connect(m_ui.actionQuit, SIGNAL(triggered()), this, SLOT(close()));
@@ -87,6 +91,20 @@ void MainWindow::addNewStudy()
 {
     const int rowCount = m_studyListModel->rowCount();
     m_studyListModel->insertRows(rowCount, 1);
+}
+
+void MainWindow::removeStudy()
+{
+    QModelIndex index = m_ui.studyListView->selectionModel()->currentIndex();
+    if (index.isValid()) {
+        int id = index.sibling(index.row(), 0).data().toInt();
+        QSqlQuery query;
+        query.prepare("delete from scenes where study = ?");
+        query.addBindValue(id);
+        query.exec();
+
+        m_studyListModel->removeRow(index.row());
+    }
 }
 
 // FIXME: Make sure that there aren't multiple studies with the same name.
@@ -131,6 +149,20 @@ void MainWindow::studyChanged(const QModelIndex &index)
 void MainWindow::updateActions(const QString &studyName)
 {
     m_ui.actionEditStudyScenes->setText(QString("Edit %1's Scenes").arg(studyName));
+    m_ui.actionRemoveStudy->setText(QString("Remove %1").arg(studyName));
+}
+
+void MainWindow::showStudyMenu(QPoint point)
+{
+    QMenu menu;
+    QListView *view = m_ui.studyListView;
+    if (view->indexAt(point).isValid()) {
+        menu.addAction(m_ui.actionEditStudyScenes);
+        menu.addAction(m_ui.actionRemoveStudy);
+        menu.addSeparator();
+    }
+    menu.addAction(m_ui.actionAddNewStudy);
+    menu.exec(view->mapToGlobal(point));
 }
 
 bool MainWindow::connectToDatabase()

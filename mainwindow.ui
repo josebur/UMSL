@@ -126,15 +126,16 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>&amp;File</string>
     </property>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuStudy">
     <property name="title">
-     <string>Study</string>
+     <string>&amp;Study</string>
     </property>
     <addaction name="actionEditStudyScenes"/>
+    <addaction name="actionRemoveStudy"/>
     <addaction name="separator"/>
     <addaction name="actionAddNewStudy"/>
    </widget>
@@ -146,15 +147,32 @@
    <property name="text">
     <string>&amp;Quit</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
   </action>
   <action name="actionEditStudyScenes">
    <property name="text">
-    <string>Edit Study's Scenes</string>
+    <string>E&amp;dit Study's Scenes</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
    </property>
   </action>
   <action name="actionAddNewStudy">
    <property name="text">
-    <string>Add New Study</string>
+    <string>&amp;Add New Study</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionRemoveStudy">
+   <property name="text">
+    <string>&amp;Remove Study</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
    </property>
   </action>
  </widget>
