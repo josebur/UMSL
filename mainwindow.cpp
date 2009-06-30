@@ -161,7 +161,9 @@ void MainWindow::showStudyMenu(QPoint point)
 {
     QMenu menu;
     QListView *view = m_ui.studyListView;
-    if (view->indexAt(point).isValid()) {
+    QModelIndex index = view->indexAt(point);
+    if (index.isValid()) {
+        studyChanged(index);
         menu.addAction(m_ui.actionEditStudyScenes);
         menu.addAction(m_ui.actionRemoveStudy);
         menu.addSeparator();
