@@ -91,6 +91,11 @@ void MainWindow::addNewStudy()
 {
     const int rowCount = m_studyListModel->rowCount();
     m_studyListModel->insertRows(rowCount, 1);
+    QModelIndex index = m_studyListModel->index(rowCount, 1);
+    if (index.isValid()) {
+        m_ui.studyListView->setCurrentIndex(index);
+        m_ui.studyListView->scrollTo(index, QAbstractItemView::EnsureVisible);
+    }
 }
 
 void MainWindow::removeStudy()
@@ -185,18 +190,6 @@ bool MainWindow::connectToDatabase()
             return false;
         }
         if (!query.exec(CREATE_STUDIES_QUERY)) {
-            qDebug() << query.lastError().text();
-            return false;
-        }
-        if (!query.exec(TEST_STUDIES)) {
-            qDebug() << query.lastError().text();
-            return false;
-        }
-        if (!query.exec(TEST_SCENES1)) {
-            qDebug() << query.lastError().text();
-            return false;
-        }
-        if (!query.exec(TEST_SCENES2)) {
             qDebug() << query.lastError().text();
             return false;
         }
