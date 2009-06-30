@@ -23,3 +23,4 @@ HEADERS += mainwindow.h \
     studylistmodel.h
 FORMS += mainwindow.ui \
     studysceneeditor.ui
+RESOURCES += usml.qrc

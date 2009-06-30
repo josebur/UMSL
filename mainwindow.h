@@ -37,13 +37,15 @@ public:
 public Q_SLOTS:
 
 private Q_SLOTS:
+    void studyChanged(const QModelIndex &index);
     void addNewStudy();
     void setNewStudyName(int row, QSqlRecord &record);
     void editStudyScenes();
-    void updateActions(const QModelIndex &index);
+    void updateActions(const QString &studyName);
 
 private:
     bool connectToDatabase();
+    void initStudy();
 
     QSqlDatabase m_database;
     StudyListModel *m_studyListModel;

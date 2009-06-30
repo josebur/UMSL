@@ -63,12 +63,12 @@ MainWindow::MainWindow(QWidget *parent)
     QModelIndex index = m_studyListModel->index(0, 1);
     if (index.isValid()) {
         m_ui.studyListView->setCurrentIndex(index);
-        updateActions(index);
+        studyChanged(index);
     }
 
     connect(m_studyListModel, SIGNAL(dataChanged(const QModelIndex, const QModelIndex)),
-            this, SLOT(updateActions(QModelIndex)));
-    connect(m_ui.studyListView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateActions(QModelIndex)));
+            this, SLOT(studyChanged(QModelIndex)));
+    connect(m_ui.studyListView, SIGNAL(clicked(QModelIndex)), this, SLOT(studyChanged(QModelIndex)));
     connect(m_ui.actionEditStudyScenes, SIGNAL(triggered()), this, SLOT(editStudyScenes()));
     connect(m_ui.actionAddNewStudy, SIGNAL(triggered()), this, SLOT(addNewStudy()));
     connect(m_studyListModel, SIGNAL(primeInsert(int,QSqlRecord&)),
@@ -94,7 +94,16 @@ void MainWindow::setNewStudyName(int row, QSqlRecord &record)
 {
     Q_UNUSED(row);
 
-    record.setValue(1, "New Study");
+//    QModelIndex begin = m_studyListModel->index(0, 1);
+//    if (begin.isValid()) {
+//        QModelIndexList list = m_studyListModel->match(begin, Qt::DisplayRole, "New Study",
+//                                                       -1);
+//        const int n = list.count();
+//        record.setValue(1, QString("New Study %1").arg(n+1));
+//    }
+//    else {
+        record.setValue(1, "Enter a new study name");
+    //}
 }
 
 void MainWindow::editStudyScenes()
@@ -103,17 +112,23 @@ void MainWindow::editStudyScenes()
     editor.exec();
 }
 
-void MainWindow::updateActions(const QModelIndex &index)
+void MainWindow::studyChanged(const QModelIndex &index)
 {
     if (index.isValid()) {
-        const QString name = index.data().toString();
-        if (m_currentStudy != 0) {
+        const QString name = index.data(0).toString();
+        if (m_currentStudy) {
             delete m_currentStudy;
         }
         m_currentStudy = new Study(name);
-
-        m_ui.actionEditStudyScenes->setText(QString("Edit %1's Scenes").arg(name));
+        updateActions(name);
+        initStudy();
+        connect(m_ui.playButton, SIGNAL(clicked()), m_currentStudy, SLOT(start()));
     }
+}
+
+void MainWindow::updateActions(const QString &studyName)
+{
+    m_ui.actionEditStudyScenes->setText(QString("Edit %1's Scenes").arg(studyName));
 }
 
 bool MainWindow::connectToDatabase()
@@ -154,4 +169,29 @@ bool MainWindow::connectToDatabase()
         qDebug() << "Database created successfully";
     }
     return true;
+}
+
+void MainWindow::initStudy()
+{
+    const QString name = m_currentStudy->name();
+    int id = -1;
+    QSqlQuery query("select (id) from studies where name = ?");
+    query.addBindValue(name);
+    query.exec();
+    query.next();
+    id = query.value(0).toInt();
+
+    query.prepare("select id, name, length, polling from scenes where study = ? order by 1");
+    query.addBindValue(id);
+    query.exec();
+    while (query.next()) {
+        AbstractScene *scene;
+        if (query.value(3).toBool()) {
+            scene = new Scene(query.value(1).toString(), query.value(2).toInt());
+        }
+        else {
+            scene = new BreakScene(query.value(1).toString(), query.value(2).toInt());
+        }
+        m_currentStudy->addScene(scene);
+    }
 }
