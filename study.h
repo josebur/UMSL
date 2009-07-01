@@ -80,6 +80,16 @@ public:
      */
     void removeScene(AbstractScene *scene);
 
+    /**
+     * Returns true if study is currently paused, false otherwise
+     */
+    bool isPaused() const;
+
+    /**
+     * Set if the study is currently paused.
+     */
+    void setIsPaused(bool paused);
+
 public Q_SLOTS:
     /**
      * Start the timer on the Study. The scenes are
@@ -92,6 +102,11 @@ public Q_SLOTS:
      * Pause the study on its current scene.
      */
     void pause();
+
+    /**
+     * Resume the study if it has been paused.
+     */
+    void resume();
 
 Q_SIGNALS:
     /**
@@ -121,6 +136,7 @@ private:
     QList<AbstractScene *> m_scenes;
     int m_pollingInterval;
     int m_currentSceneIndex;
+    bool m_paused;
 };
 
 #endif // STUDY_H

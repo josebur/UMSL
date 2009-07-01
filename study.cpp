@@ -26,7 +26,8 @@
 #include <QString>
 
 Study::Study(const QString name, int pollingInterval)
-    : m_name(name), m_pollingInterval(pollingInterval), m_currentSceneIndex(-1)
+    : m_name(name), m_pollingInterval(pollingInterval),
+      m_currentSceneIndex(-1), m_paused(false)
 {
 
 }
@@ -80,6 +81,16 @@ void Study::removeScene(AbstractScene *scene)
     removeScene(scene->name());
 }
 
+bool Study::isPaused() const
+{
+    return m_paused;
+}
+
+void Study::setIsPaused(bool paused)
+{
+    m_paused = paused;
+}
+
 void Study::start()
 {
     if (m_scenes.empty()) {
@@ -102,7 +113,17 @@ void Study::pause()
 {
     AbstractScene *currentScene = m_scenes.at(m_currentSceneIndex);
     currentScene->pause();
+    m_paused = true;
     emit studyPaused(this);
+}
+
+void Study::resume()
+{
+    if (m_paused) {
+        AbstractScene *currentScene = m_scenes.at(m_currentSceneIndex);
+        currentScene->resume();
+        m_paused = false;
+    }
 }
 
 void Study::startNextScene()

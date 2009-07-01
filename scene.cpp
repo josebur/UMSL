@@ -83,6 +83,11 @@ void AbstractScene::pause()
     m_timer->stop();
 }
 
+void AbstractScene::resume()
+{
+    m_timer->start(1000);
+}
+
 void AbstractScene::end()
 {
     //qDebug() << "Scene " << m_name << " ended";

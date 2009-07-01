@@ -71,7 +71,10 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     m_ui.dataView->setEnabled(false);
+    m_ui.pauseButton->setEnabled(false);
 
+    connect(m_ui.playButton, SIGNAL(clicked()), this, SLOT(startStudy()));
+    connect(m_ui.pauseButton, SIGNAL(clicked()), this, SLOT(pauseStudy()));
     connect(m_studyListModel, SIGNAL(dataChanged(const QModelIndex, const QModelIndex)),
             this, SLOT(studyChanged(QModelIndex)));
     connect(m_ui.studyListView, SIGNAL(clicked(QModelIndex)), this, SLOT(studyChanged(QModelIndex)));
@@ -162,8 +165,7 @@ void MainWindow::studyChanged(const QModelIndex &index)
         m_currentStudy = new Study(name);
         updateActions(name);
         initStudy();
-        connect(m_ui.playButton, SIGNAL(clicked()), this, SLOT(startStudy()));
-        connect(m_ui.pauseButton, SIGNAL(clicked()), this, SLOT(pauseStudy()));
+
         connect(m_currentStudy, SIGNAL(studyEnded(Study*)),
                 this, SLOT(endStudy()));
     }
@@ -192,10 +194,18 @@ void MainWindow::showStudyMenu(QPoint point)
 
 void MainWindow::startStudy()
 {
+    qDebug() << "startStudy called";
+
     m_ui.playButton->setDisabled(true);
+    m_ui.pauseButton->setEnabled(true);
     m_ui.studyListView->setDisabled(true);
     m_ui.menuStudy->setDisabled(true);
-    m_currentStudy->start();
+    if (m_currentStudy->isPaused()) {
+        m_currentStudy->resume();
+    }
+    else {
+        m_currentStudy->start();
+    }
 }
 
 void MainWindow::endStudy()
@@ -203,11 +213,16 @@ void MainWindow::endStudy()
     m_ui.playButton->setEnabled(true);
     m_ui.studyListView->setEnabled(true);
     m_ui.menuStudy->setEnabled(true);
+
+    QModelIndex index = m_ui.studyListView->selectionModel()->currentIndex();
+    studyChanged(index);
 }
 
 void MainWindow::pauseStudy()
 {
-    endStudy();
+    m_ui.playButton->setEnabled(true);
+    m_ui.pauseButton->setDisabled(true);
+
     m_currentStudy->pause();
 }
 
