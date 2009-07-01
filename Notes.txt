@@ -6,6 +6,15 @@ TODO
 * Be able to pause study.
 
 * Need to figure out the timeline and pausing. Both are very high priority!!
+Timeline Class
+---------------
+QWidget Subclass
+StudyTimeline(Study *)
+need to reimplement paintEvent()
+should have a QVector<QRectF> m_rects
+
+In the Constructor, call a function to go through the scenes and calculate the rects
+for them. Then in pain event, should just be able to call QPainter::drawRects(m_rects).
 
 Drawing Calculations
 --------------------
