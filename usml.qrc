@@ -2,5 +2,6 @@
     <qresource prefix="/icons" >
         <file>Icons/player_play.png</file>
         <file>Icons/player_pause.png</file>
+        <file>Icons/UMSL_logo.png</file>
     </qresource>
 </RCC>

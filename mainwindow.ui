@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>UMSL</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="usml.qrc">
+    <normaloff>:/icons/Icons/UMSL_logo.png</normaloff>:/icons/Icons/UMSL_logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="studiesWidget" native="true">
@@ -57,7 +61,7 @@
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="usml.qrc">
            <normaloff>:/icons/Icons/player_play.png</normaloff>:/icons/Icons/player_play.png</iconset>
          </property>
          <property name="iconSize">
@@ -77,7 +81,7 @@
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="usml.qrc">
            <normaloff>:/icons/Icons/player_pause.png</normaloff>:/icons/Icons/player_pause.png</iconset>
          </property>
          <property name="iconSize">
@@ -176,6 +180,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="usml.qrc"/>
+ </resources>
  <connections/>
 </ui>
