@@ -54,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent)
     if (!connectToDatabase()) {
         QMessageBox::critical(this, "Database Error",
                               "Unable to connect to database");
+        close();
     }
 
     m_studyListModel = new StudyListModel(0, m_database);
@@ -68,6 +69,8 @@ MainWindow::MainWindow(QWidget *parent)
         m_ui.studyListView->setCurrentIndex(index);
         studyChanged(index);
     }
+
+    m_ui.dataView->setEnabled(false);
 
     connect(m_studyListModel, SIGNAL(dataChanged(const QModelIndex, const QModelIndex)),
             this, SLOT(studyChanged(QModelIndex)));
@@ -159,7 +162,9 @@ void MainWindow::studyChanged(const QModelIndex &index)
         m_currentStudy = new Study(name);
         updateActions(name);
         initStudy();
-        connect(m_ui.playButton, SIGNAL(clicked()), m_currentStudy, SLOT(start()));
+        connect(m_ui.playButton, SIGNAL(clicked()), this, SLOT(startStudy()));
+        connect(m_currentStudy, SIGNAL(studyEnded(Study*)),
+                this, SLOT(endStudy()));
     }
 }
 
@@ -182,6 +187,21 @@ void MainWindow::showStudyMenu(QPoint point)
     }
     menu.addAction(m_ui.actionAddNewStudy);
     menu.exec(view->mapToGlobal(point));
+}
+
+void MainWindow::startStudy()
+{
+    m_ui.playButton->setDisabled(true);
+    m_ui.studyListView->setDisabled(true);
+    m_ui.menuStudy->setDisabled(true);
+    m_currentStudy->start();
+}
+
+void MainWindow::endStudy()
+{
+    m_ui.playButton->setEnabled(true);
+    m_ui.studyListView->setEnabled(true);
+    m_ui.menuStudy->setEnabled(true);
 }
 
 bool MainWindow::connectToDatabase()

@@ -44,6 +44,8 @@ private Q_SLOTS:
     void editStudyScenes();
     void updateActions(const QString &studyName);
     void showStudyMenu(QPoint point);
+    void startStudy();
+    void endStudy();
 
 private:
     bool connectToDatabase();

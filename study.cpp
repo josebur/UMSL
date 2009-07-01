@@ -57,9 +57,6 @@ void Study::setPollingInterval(int interval)
     m_pollingInterval = interval;
 }
 
-// add a scene to the end of the list
-// TODO: make it possible to add a scene anywhere
-// in the list
 void Study::addScene(AbstractScene *scene)
 {
     m_scenes.append(scene);
@@ -87,6 +84,7 @@ void Study::start()
 {
     if (m_scenes.empty()) {
         qDebug() << "No Scenes to start";
+        emit studyEnded(this);
         return;
     }
 
@@ -122,7 +120,7 @@ void Study::pollScene(AbstractScene *scene)
 {
     static int currentInterval = 0;
     static qreal total = 0.0;
-    qDebug() << "Scene: " << scene->name();
+    //qDebug() << "Scene: " << scene->name();
     if (!scene->pollDuringScene()) {
         qDebug() << "No Polling";
     } else {

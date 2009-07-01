@@ -35,7 +35,6 @@ AbstractScene::AbstractScene(const QString name, const int length,
 
 AbstractScene::~AbstractScene()
 {
-    // FIXME:this may crash now
     delete m_timer;
 }
 
@@ -81,7 +80,7 @@ void AbstractScene::start()
 
 void AbstractScene::end()
 {
-    qDebug() << "Scene " << m_name << " ended";
+    //qDebug() << "Scene " << m_name << " ended";
     m_timer->stop();
     emit sceneEnded(this);
 }

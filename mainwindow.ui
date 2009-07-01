@@ -57,7 +57,7 @@
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset resource="usml.qrc">
+          <iconset>
            <normaloff>:/icons/Icons/player_play.png</normaloff>:/icons/Icons/player_play.png</iconset>
          </property>
          <property name="iconSize">
@@ -77,7 +77,7 @@
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset resource="usml.qrc">
+          <iconset>
            <normaloff>:/icons/Icons/player_pause.png</normaloff>:/icons/Icons/player_pause.png</iconset>
          </property>
          <property name="iconSize">
@@ -110,7 +110,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QTextEdit" name="textEdit"/>
+      <widget class="QTextEdit" name="dataView"/>
      </item>
     </layout>
    </widget>
@@ -121,7 +121,7 @@
      <x>0</x>
      <y>0</y>
      <width>790</width>
-     <height>28</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -176,8 +176,6 @@
    </property>
   </action>
  </widget>
- <resources>
-  <include location="usml.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
