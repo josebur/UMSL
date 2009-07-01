@@ -100,6 +100,14 @@ void MainWindow::addNewStudy()
 
 void MainWindow::removeStudy()
 {
+    if (QMessageBox::question(this, "Remove Study?",
+                              QString("Are you sure your want to remove %1 and all of its scenes?")
+                              .arg(m_currentStudy->name()),
+                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+        == QMessageBox::No) {
+        return;
+    }
+
     QModelIndex index = m_ui.studyListView->selectionModel()->currentIndex();
     if (index.isValid()) {
         int id = index.sibling(index.row(), 0).data().toInt();
@@ -135,6 +143,10 @@ void MainWindow::editStudyScenes()
 {
     StudySceneEditor editor(m_currentStudy, &m_database);
     editor.exec();
+    QModelIndex index = m_ui.studyListView->selectionModel()->currentIndex();
+    if (index.isValid()) {
+        studyChanged(index);
+    }
 }
 
 void MainWindow::studyChanged(const QModelIndex &index)

@@ -1,22 +1,11 @@
 TODO
 ----
-
-StudySceneEditor
-    - reorder Scene (optional)
-
-QSqlRelationalTableModel
-    - change the length data to show MM:SS
-
-QSqlRelationalDelegate
-    - figure out some different way to edit the length
-
-
-Notes
------
 * Poll Every Second ... Don't worry about averaging yet.
 * Two Files ... Raw Data and then optional averaging data.
 * How to handle scenes that that aren't divisable by averaging interval?
 * Be able to pause study.
+
+* Need to figure out the timeline and pausing. Both are very high priority!!
 
 Drawing Calculations
 --------------------
