@@ -81,6 +81,11 @@ public Q_SLOTS:
     void start();
 
     /**
+     * Pause the scene.
+     */
+    void pause();
+
+    /**
      * Call when the scene ends.
      * (should be private?)
      */

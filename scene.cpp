@@ -78,6 +78,11 @@ void AbstractScene::start()
     emit sceneStarted(this);
 }
 
+void AbstractScene::pause()
+{
+    m_timer->stop();
+}
+
 void AbstractScene::end()
 {
     //qDebug() << "Scene " << m_name << " ended";

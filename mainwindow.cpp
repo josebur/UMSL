@@ -163,6 +163,7 @@ void MainWindow::studyChanged(const QModelIndex &index)
         updateActions(name);
         initStudy();
         connect(m_ui.playButton, SIGNAL(clicked()), this, SLOT(startStudy()));
+        connect(m_ui.pauseButton, SIGNAL(clicked()), this, SLOT(pauseStudy()));
         connect(m_currentStudy, SIGNAL(studyEnded(Study*)),
                 this, SLOT(endStudy()));
     }
@@ -202,6 +203,12 @@ void MainWindow::endStudy()
     m_ui.playButton->setEnabled(true);
     m_ui.studyListView->setEnabled(true);
     m_ui.menuStudy->setEnabled(true);
+}
+
+void MainWindow::pauseStudy()
+{
+    endStudy();
+    m_currentStudy->pause();
 }
 
 bool MainWindow::connectToDatabase()

@@ -46,6 +46,7 @@ private Q_SLOTS:
     void showStudyMenu(QPoint point);
     void startStudy();
     void endStudy();
+    void pauseStudy();
 
 private:
     bool connectToDatabase();

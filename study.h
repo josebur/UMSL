@@ -88,6 +88,11 @@ public Q_SLOTS:
      */
     void start();
 
+    /**
+     * Pause the study on its current scene.
+     */
+    void pause();
+
 Q_SIGNALS:
     /**
      * Emitted when the study is started.
@@ -99,6 +104,11 @@ Q_SIGNALS:
      * have finished.
      */
     void studyEnded(Study *);
+
+    /**
+     * Emitted when the study is paused.
+     */
+    void studyPaused(Study *);
 
 private Q_SLOTS:
     void startNextScene();

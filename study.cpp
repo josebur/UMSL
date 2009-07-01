@@ -98,6 +98,13 @@ void Study::start()
     emit studyStarted(this);
 }
 
+void Study::pause()
+{
+    AbstractScene *currentScene = m_scenes.at(m_currentSceneIndex);
+    currentScene->pause();
+    emit studyPaused(this);
+}
+
 void Study::startNextScene()
 {
     if (m_currentSceneIndex + 1 == m_scenes.size()) {
