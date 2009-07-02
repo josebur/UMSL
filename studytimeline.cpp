@@ -19,11 +19,19 @@
 
 #include "studytimeline.h"
 
+#include "scene.h"
+#include "study.h"
+
+#include <QDebug>
+#include <QPainter>
+#include <QRectF>
 #include <QWidget>
+
 StudyTimeLine::StudyTimeLine(QWidget *parent)
     : QWidget(parent)
 {
     m_study = 0;
+    setAutoFillBackground(true);
 }
 
 Study *StudyTimeLine::study() const
@@ -34,14 +42,45 @@ Study *StudyTimeLine::study() const
 void StudyTimeLine::setStudy(Study *study)
 {
     m_study = study;
+    calculateRects();
 }
 
 void StudyTimeLine::paintEvent(QPaintEvent *event)
 {
+   qDebug() << "paintEvent";
+   QPainter painter(this);
+   painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing,
+                          true);
+   painter.setPen(Qt::SolidLine);
+   painter.setBrush(Qt::green);
+   painter.save();
+   painter.drawRects(rects);
+   painter.restore();
+}
 
+void StudyTimeLine::resizeEvent(QResizeEvent *event)
+{
+    qDebug() << "resizeEvent()";
+    update();
+    QWidget::resizeEvent(event);
 }
 
 void StudyTimeLine::calculateRects()
 {
+    const qreal height = (qreal)QWidget::height();
+    const qreal width = (qreal)QWidget::width();
 
+    const int totalSeconds = m_study->length();
+    const qreal pixelsPerSecond = (qreal)width/totalSeconds;
+
+    qreal start = -1.0;
+
+    foreach (const AbstractScene *scene, m_study->scenes()) {
+        start += 1.0;
+        qreal scenePixelWidth = scene->length() * pixelsPerSecond;
+        QRectF rect(start, 0, scenePixelWidth, height);
+        rects.append(rect);
+        start += scenePixelWidth;
+    }
+    update();
 }

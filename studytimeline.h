@@ -36,6 +36,7 @@ public:
 
 protected:
     virtual void paintEvent(QPaintEvent *event);
+    virtual void resizeEvent(QResizeEvent *event);
 
 private:
     void calculateRects();

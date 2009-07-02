@@ -63,6 +63,11 @@ public:
     void setPollingInterval(int interval);
 
     /**
+     * Returns a list of scenes.
+     */
+    QList<AbstractScene *> scenes() const;
+
+    /**
      * Adds a new scene to the end of the studies
      * collection of scenes.
      */
@@ -89,6 +94,11 @@ public:
      * Set if the study is currently paused.
      */
     void setIsPaused(bool paused);
+
+    /**
+     * Returns the total length of the scene.
+     */
+    int length() const;
 
 public Q_SLOTS:
     /**
@@ -136,6 +146,7 @@ private:
     QList<AbstractScene *> m_scenes;
     int m_pollingInterval;
     int m_currentSceneIndex;
+    int m_length;
     bool m_paused;
 };
 

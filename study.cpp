@@ -27,7 +27,7 @@
 
 Study::Study(const QString name, int pollingInterval)
     : m_name(name), m_pollingInterval(pollingInterval),
-      m_currentSceneIndex(-1), m_paused(false)
+      m_currentSceneIndex(-1), m_paused(false), m_length(0)
 {
 
 }
@@ -58,9 +58,15 @@ void Study::setPollingInterval(int interval)
     m_pollingInterval = interval;
 }
 
+QList<AbstractScene *> Study::scenes() const
+{
+    return m_scenes;
+}
+
 void Study::addScene(AbstractScene *scene)
 {
     m_scenes.append(scene);
+    m_length += scene->length();
     listScenes();
 }
 
@@ -69,6 +75,7 @@ void Study::removeScene(const QString name)
     int index = 0;
     foreach (const AbstractScene *scene, m_scenes) {
         if (scene->name() == name) {
+            m_length -= scene->length();
             m_scenes.removeAt(index);
         }
         index++;
@@ -89,6 +96,11 @@ bool Study::isPaused() const
 void Study::setIsPaused(bool paused)
 {
     m_paused = paused;
+}
+
+int Study::length() const
+{
+    return m_length;
 }
 
 void Study::start()

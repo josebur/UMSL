@@ -277,4 +277,5 @@ void MainWindow::initStudy()
         }
         m_currentStudy->addScene(scene);
     }
+    m_ui.timeline->setStudy(m_currentStudy);
 }
