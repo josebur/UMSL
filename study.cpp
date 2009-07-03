@@ -27,9 +27,9 @@
 
 Study::Study(const QString name, int pollingInterval)
     : m_name(name), m_pollingInterval(pollingInterval),
-      m_currentSceneIndex(-1), m_paused(false), m_length(0)
+      m_currentSceneIndex(-1), m_paused(false)
 {
-
+    m_length = 0;
 }
 
 Study::~Study()

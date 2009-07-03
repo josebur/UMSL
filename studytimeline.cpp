@@ -43,10 +43,12 @@ void StudyTimeLine::setStudy(Study *study)
 {
     m_study = study;
     calculateRects();
+    update();
 }
 
 void StudyTimeLine::paintEvent(QPaintEvent *event)
 {
+   calculateRects();
    qDebug() << "paintEvent";
    QPainter painter(this);
    painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing,
@@ -56,13 +58,6 @@ void StudyTimeLine::paintEvent(QPaintEvent *event)
    painter.save();
    painter.drawRects(rects);
    painter.restore();
-}
-
-void StudyTimeLine::resizeEvent(QResizeEvent *event)
-{
-    qDebug() << "resizeEvent()";
-    update();
-    QWidget::resizeEvent(event);
 }
 
 void StudyTimeLine::calculateRects()
@@ -82,5 +77,4 @@ void StudyTimeLine::calculateRects()
         rects.append(rect);
         start += scenePixelWidth;
     }
-    update();
 }
