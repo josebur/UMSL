@@ -23,4 +23,8 @@ total width in pixels = 100
 
 pixels per second = 100 / 60 = 1.6666666666666667
 
-scene.length() == 10 --> pixels wide = 10 * 1.6666666666666667
+scene.length() == 10 --> pixels wide = 10 * 1.666666666666666
+
+y1 = 0;
+x1 = x2 = m_currentSecond * pixelsPerSecond
+y2 = height()

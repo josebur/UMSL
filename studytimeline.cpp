@@ -89,6 +89,14 @@ void StudyTimeLine::paintEvent(QPaintEvent *event)
            ++i;
        }
 
+       // draw the position indicator
+       qreal pixelsPerSecond = QWidget::width() / m_study->length();
+       pen.setColor(Qt::blue);
+       pen.setWidth(2);
+       painter.setPen(pen);
+       qreal x = m_currentTime * (QWidget::width() / m_study->length());
+       QLineF line(x, 0.0, x, QWidget::height());
+       painter.drawLine(line);
 
     }    
     else {
@@ -108,10 +116,12 @@ void StudyTimeLine::paintEvent(QPaintEvent *event)
 
 void StudyTimeLine::updateCurrentTime()
 {
+    update();
     m_currentTime++;
-    if (m_currentTime == m_study->length()) {
+    if (m_currentTime == m_study->length()-1) {
         m_currentTime = 0;
     }
+    //update();
     qDebug() << m_currentTime;
 }
 
