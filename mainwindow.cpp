@@ -26,6 +26,7 @@
 #include "queries.h"
 
 #include <QDebug>
+#include <QDir>
 #include <QFileInfo>
 #include <QGraphicsLinearLayout>
 #include <QGraphicsScene>
@@ -273,11 +274,14 @@ void MainWindow::readSettings()
 
 bool MainWindow::connectToDatabase()
 {
-    QFileInfo info("umsl.db");
+    QString configPath(QDir::homePath() + QDir::separator() + ".config"
+                + QDir::separator() + "UMSL" + QDir::separator() + "umsl.db");
+
+    QFileInfo info(configPath);
     bool createDatabase = !info.exists();
 
     m_database = QSqlDatabase::addDatabase("QSQLITE");
-    m_database.setDatabaseName("umsl.db");
+    m_database.setDatabaseName(configPath);
 
     if (!m_database.open()) {
         qDebug() << m_database.lastError();
