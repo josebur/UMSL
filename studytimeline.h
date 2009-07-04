@@ -28,6 +28,7 @@ class Study;
 
 class StudyTimeLine : public QWidget
 {
+    Q_OBJECT
 public:
     StudyTimeLine(QWidget *parent = 0);
 
@@ -37,11 +38,15 @@ public:
 protected:
     virtual void paintEvent(QPaintEvent *event);
 
+private Q_SLOTS:
+    void updateCurrentTime();
+
 private:
     void calculateRects();
 
     Study *m_study;
     QVector<QRectF> m_rects;
+    int m_currentTime;
 };
 
 #endif // STUDYTIMELINE_H

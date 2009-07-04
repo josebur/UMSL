@@ -66,6 +66,8 @@ QList<AbstractScene *> Study::scenes() const
 void Study::addScene(AbstractScene *scene)
 {
     m_scenes.append(scene);
+    connect(scene, SIGNAL(secondTick(AbstractScene*)),
+            this, SIGNAL(studyTick()));
     m_length += scene->length();
     listScenes();
 }

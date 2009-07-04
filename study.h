@@ -135,6 +135,11 @@ Q_SIGNALS:
      */
     void studyPaused(Study *);
 
+    /**
+     * Emitted when a second of the study has passed.
+     */
+    void studyTick();
+
 private Q_SLOTS:
     void startNextScene();
     void pollScene(AbstractScene *scene);

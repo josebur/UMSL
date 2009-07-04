@@ -32,6 +32,7 @@ StudyTimeLine::StudyTimeLine(QWidget *parent)
     : QWidget(parent)
 {
     m_study = 0;
+    m_currentTime = 0;
     setAutoFillBackground(true);
 }
 
@@ -43,34 +44,41 @@ Study *StudyTimeLine::study() const
 void StudyTimeLine::setStudy(Study *study)
 {
     m_study = study;
+    connect(m_study, SIGNAL(studyTick()), this, SLOT(updateCurrentTime()));
     calculateRects();
     update();
 }
 
 void StudyTimeLine::paintEvent(QPaintEvent *event)
 {
+    Q_UNUSED(event);
+
     if (m_study && m_study->length() != 0) {
        calculateRects();
-       qDebug() << "paintEvent";
+
        QPainter painter(this);
        painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing,
                               true);
        QPen pen;
        pen.setStyle(Qt::SolidLine);
-       pen.setWidthF(2.5);
+       pen.setWidthF(2.3);
        pen.setJoinStyle(Qt::RoundJoin);
        painter.setPen(pen);
+
+       QBrush brush;
+       brush.setStyle(Qt::SolidPattern);
 
        int i = 0;
        foreach (const QRectF &rect, m_rects) {
            AbstractScene *scene = m_study->scenes().at(i);
            QFontMetricsF fm(font());
            if (scene->pollDuringScene()) {
-               painter.setBrush(Qt::green);
+               brush.setColor(Qt::green);
            }
            else {
-               painter.setBrush(Qt::red);
+               brush.setColor(Qt::red);
            }
+           painter.setBrush(brush);
 
            QRectF boundingRect = fm.boundingRect(scene->name());
            painter.drawRect(rect);
@@ -82,8 +90,6 @@ void StudyTimeLine::paintEvent(QPaintEvent *event)
        }
 
 
-       qDebug() << "number of rects: " << m_rects.count()
-                << " number of scenes: " << m_study->scenes().count();
     }    
     else {
         QRect rect(0, 0, geometry().width(), geometry().height());
@@ -98,6 +104,15 @@ void StudyTimeLine::paintEvent(QPaintEvent *event)
             painter.drawText(rect, Qt::AlignCenter, "No Study Selected");
         }
     }
+}
+
+void StudyTimeLine::updateCurrentTime()
+{
+    m_currentTime++;
+    if (m_currentTime == m_study->length()) {
+        m_currentTime = 0;
+    }
+    qDebug() << m_currentTime;
 }
 
 void StudyTimeLine::calculateRects()
