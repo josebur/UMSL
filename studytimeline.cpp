@@ -48,19 +48,29 @@ void StudyTimeLine::setStudy(Study *study)
 
 void StudyTimeLine::paintEvent(QPaintEvent *event)
 {
-   calculateRects();
-   qDebug() << "paintEvent";
-   QPainter painter(this);
-   painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing,
-                          true);
-   painter.setPen(Qt::SolidLine);
-   painter.setBrush(Qt::green);
-   painter.save();
-   painter.drawRects(rects);
-   painter.restore();
+    if (m_study && m_study->length() != 0) {
+       calculateRects();
+       qDebug() << "paintEvent";
+       QPainter painter(this);
+       painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing,
+                              true);
+       painter.setPen(Qt::SolidLine);
+       painter.setBrush(Qt::green);
+       painter.save();
+       painter.drawRects(rects);
+       painter.restore();
 
-   qDebug() << "number of rects: " << rects.count()
-            << " number of scenes: " << m_study->scenes().count();
+       qDebug() << "number of rects: " << rects.count()
+                << " number of scenes: " << m_study->scenes().count();
+    }
+    else {
+        QRect rect(0, 0, geometry().width(), geometry().height());
+        QPainter painter(this);
+        painter.setPen(Qt::SolidLine);
+        painter.setBrush(Qt::white);
+        painter.drawRect(rect);
+        painter.drawText(rect, Qt::AlignCenter, "No Study Selected");
+    }
 }
 
 void StudyTimeLine::calculateRects()
