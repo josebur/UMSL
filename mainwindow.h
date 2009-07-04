@@ -24,6 +24,8 @@
 
 #include <QSqlDatabase>
 
+class QSplitter;
+
 class Study;
 class StudyListModel;
 
@@ -34,7 +36,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-public Q_SLOTS:
+protected:
+    void closeEvent(QCloseEvent *event);
 
 private Q_SLOTS:
     void studyChanged(const QModelIndex &index);
@@ -49,12 +52,15 @@ private Q_SLOTS:
     void pauseStudy();
 
 private:
+    void writeSettings();
+    void readSettings();
     bool connectToDatabase();
     void initStudy();
 
     QSqlDatabase m_database;
     StudyListModel *m_studyListModel;
     Study *m_currentStudy;
+    QSplitter *m_page;
     Ui::MainWindow m_ui;
 };
 

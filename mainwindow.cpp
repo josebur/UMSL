@@ -31,6 +31,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsWidget>
 #include <QMessageBox>
+#include <QSettings>
 #include <QSplitter>
 #include <QSqlDatabase>
 #include <QSqlError>
@@ -46,10 +47,12 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     m_ui.setupUi(this);
-    QSplitter *page = new QSplitter(parent);
-    page->addWidget(m_ui.studiesWidget);
-    page->addWidget(m_ui.mainWidget);
-    setCentralWidget(page);
+    m_page = new QSplitter(parent);
+    m_page->addWidget(m_ui.studiesWidget);
+    m_page->addWidget(m_ui.mainWidget);
+    setCentralWidget(m_page);
+
+    readSettings();
 
     if (!connectToDatabase()) {
         QMessageBox::critical(this, "Database Error",
@@ -91,6 +94,12 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete m_studyListModel;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    writeSettings();
+    event->accept();
 }
 
 void MainWindow::addNewStudy()
@@ -231,6 +240,35 @@ void MainWindow::pauseStudy()
     m_ui.pauseButton->setDisabled(true);
 
     m_currentStudy->pause();
+}
+
+void MainWindow::writeSettings()
+{
+    QSettings settings("UMSL", "umsl");
+
+    if (!isMaximized()) {
+        settings.setValue("max", false);
+        settings.setValue("pos", pos());
+        settings.setValue("size", size());
+    }
+    else {
+        settings.setValue("max", true);
+    }
+    settings.setValue("splitterSizes", m_page->saveState());
+}
+
+void MainWindow::readSettings()
+{
+   QSettings settings("UMSL", "umsl");
+
+   if (settings.value("max", false).toBool()) {
+       showMaximized();
+   }
+   else {
+       move(settings.value("pos", QPoint(100, 100)).toPoint());
+       resize(settings.value("size", QSize(800, 600)).toSize());
+   }
+   m_page->restoreState(settings.value("splitterSizes").toByteArray());
 }
 
 bool MainWindow::connectToDatabase()

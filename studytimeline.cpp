@@ -74,10 +74,12 @@ void StudyTimeLine::paintEvent(QPaintEvent *event)
            AbstractScene *scene = m_study->scenes().at(i);
            QFontMetricsF fm(font());
            if (scene->pollDuringScene()) {
-               brush.setColor(Qt::green);
+               QColor green(55, 200, 0, 180);
+               brush.setColor(green);
            }
            else {
-               brush.setColor(Qt::red);
+               QColor red(200, 55, 0, 180);
+               brush.setColor(red);
            }
            painter.setBrush(brush);
 
@@ -91,7 +93,7 @@ void StudyTimeLine::paintEvent(QPaintEvent *event)
        }
 
        // draw the position indicator
-       pen.setColor(Qt::blue);
+       pen.setColor(Qt::white);
        pen.setWidth(2);
        painter.setPen(pen);
        qreal x = m_currentTime * ((qreal)QWidget::width() / m_study->length());
