@@ -84,14 +84,19 @@ void StudyTimeLine::paintEvent(QPaintEvent *event)
 
        qDebug() << "number of rects: " << m_rects.count()
                 << " number of scenes: " << m_study->scenes().count();
-    }
+    }    
     else {
         QRect rect(0, 0, geometry().width(), geometry().height());
         QPainter painter(this);
         painter.setPen(Qt::SolidLine);
         painter.setBrush(Qt::white);
         painter.drawRect(rect);
-        painter.drawText(rect, Qt::AlignCenter, "No Study Selected");
+        if (m_study && m_study->length() == 0) {
+            painter.drawText(rect, Qt::AlignCenter, "Study Length is 0");
+        }
+        else {
+            painter.drawText(rect, Qt::AlignCenter, "No Study Selected");
+        }
     }
 }
 
