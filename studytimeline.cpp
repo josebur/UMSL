@@ -58,20 +58,23 @@ void StudyTimeLine::paintEvent(QPaintEvent *event)
    painter.save();
    painter.drawRects(rects);
    painter.restore();
+
+   qDebug() << "number of rects: " << rects.count()
+            << " number of scenes: " << m_study->scenes().count();
 }
 
 void StudyTimeLine::calculateRects()
 {
+    rects.clear();
     const qreal height = (qreal)QWidget::height();
     const qreal width = (qreal)QWidget::width();
 
     const int totalSeconds = m_study->length();
     const qreal pixelsPerSecond = (qreal)width/totalSeconds;
 
-    qreal start = -1.0;
+    qreal start = 0.0;
 
     foreach (const AbstractScene *scene, m_study->scenes()) {
-        start += 1.0;
         qreal scenePixelWidth = scene->length() * pixelsPerSecond;
         QRectF rect(start, 0, scenePixelWidth, height);
         rects.append(rect);
