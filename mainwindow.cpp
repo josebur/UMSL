@@ -217,6 +217,7 @@ void MainWindow::startStudy()
 void MainWindow::endStudy()
 {
     m_ui.playButton->setEnabled(true);
+    m_ui.pauseButton->setEnabled(false);
     m_ui.studyListView->setEnabled(true);
     m_ui.menuStudy->setEnabled(true);
 

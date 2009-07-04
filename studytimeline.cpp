@@ -45,6 +45,7 @@ void StudyTimeLine::setStudy(Study *study)
 {
     m_study = study;
     connect(m_study, SIGNAL(studyTick()), this, SLOT(updateCurrentTime()));
+    connect(m_study, SIGNAL(studyEnded(Study*)), this, SLOT(updateCurrentTime()));
     calculateRects();
     update();
 }
@@ -90,11 +91,10 @@ void StudyTimeLine::paintEvent(QPaintEvent *event)
        }
 
        // draw the position indicator
-       qreal pixelsPerSecond = QWidget::width() / m_study->length();
        pen.setColor(Qt::blue);
        pen.setWidth(2);
        painter.setPen(pen);
-       qreal x = m_currentTime * (QWidget::width() / m_study->length());
+       qreal x = m_currentTime * ((qreal)QWidget::width() / m_study->length());
        QLineF line(x, 0.0, x, QWidget::height());
        painter.drawLine(line);
 
@@ -116,12 +116,11 @@ void StudyTimeLine::paintEvent(QPaintEvent *event)
 
 void StudyTimeLine::updateCurrentTime()
 {
-    update();
     m_currentTime++;
-    if (m_currentTime == m_study->length()-1) {
+    if (m_currentTime == m_study->length()) {
         m_currentTime = 0;
     }
-    //update();
+    update();
     qDebug() << m_currentTime;
 }
 

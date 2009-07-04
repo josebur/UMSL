@@ -47,7 +47,6 @@ private:
     Study *m_study;
     QVector<QRectF> m_rects;
     int m_currentTime;
-    QLineF m_positionLine;
 };
 
 #endif // STUDYTIMELINE_H
