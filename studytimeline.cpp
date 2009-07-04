@@ -23,6 +23,7 @@
 #include "study.h"
 
 #include <QDebug>
+#include <QFontMetricsF>
 #include <QPainter>
 #include <QRectF>
 #include <QWidget>
@@ -54,13 +55,34 @@ void StudyTimeLine::paintEvent(QPaintEvent *event)
        QPainter painter(this);
        painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing,
                               true);
-       painter.setPen(Qt::SolidLine);
-       painter.setBrush(Qt::green);
-       painter.save();
-       painter.drawRects(rects);
-       painter.restore();
+       QPen pen;
+       pen.setStyle(Qt::SolidLine);
+       pen.setWidthF(2.5);
+       pen.setJoinStyle(Qt::RoundJoin);
+       painter.setPen(pen);
 
-       qDebug() << "number of rects: " << rects.count()
+       int i = 0;
+       foreach (const QRectF &rect, m_rects) {
+           AbstractScene *scene = m_study->scenes().at(i);
+           QFontMetricsF fm(font());
+           if (scene->pollDuringScene()) {
+               painter.setBrush(Qt::green);
+           }
+           else {
+               painter.setBrush(Qt::red);
+           }
+
+           QRectF boundingRect = fm.boundingRect(scene->name());
+           painter.drawRect(rect);
+           if (rect.size().width() >= boundingRect.width()) {
+               painter.drawText(rect, Qt::AlignCenter,
+                                scene->name(), &boundingRect);
+           }
+           ++i;
+       }
+
+
+       qDebug() << "number of rects: " << m_rects.count()
                 << " number of scenes: " << m_study->scenes().count();
     }
     else {
@@ -75,7 +97,7 @@ void StudyTimeLine::paintEvent(QPaintEvent *event)
 
 void StudyTimeLine::calculateRects()
 {
-    rects.clear();
+    m_rects.clear();
     const qreal height = (qreal)QWidget::height();
     const qreal width = (qreal)QWidget::width();
 
@@ -87,7 +109,7 @@ void StudyTimeLine::calculateRects()
     foreach (const AbstractScene *scene, m_study->scenes()) {
         qreal scenePixelWidth = scene->length() * pixelsPerSecond;
         QRectF rect(start, 0, scenePixelWidth, height);
-        rects.append(rect);
+        m_rects.append(rect);
         start += scenePixelWidth;
     }
 }

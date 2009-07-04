@@ -41,7 +41,7 @@ private:
     void calculateRects();
 
     Study *m_study;
-    QVector<QRectF> rects;
+    QVector<QRectF> m_rects;
 };
 
 #endif // STUDYTIMELINE_H
