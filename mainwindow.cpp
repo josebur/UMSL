@@ -275,13 +275,17 @@ void MainWindow::readSettings()
 bool MainWindow::connectToDatabase()
 {
     QString configPath(QDir::homePath() + QDir::separator() + ".config"
-                + QDir::separator() + "UMSL" + QDir::separator() + "umsl.db");
+                       + QDir::separator() + "UMSL" + QDir::separator());
 
-    QFileInfo info(configPath);
+    QFileInfo info(configPath + "umsl.db");
+    QDir dir;
     bool createDatabase = !info.exists();
+    if (createDatabase) {
+        dir.mkdir(configPath);
+    }
 
     m_database = QSqlDatabase::addDatabase("QSQLITE");
-    m_database.setDatabaseName(configPath);
+    m_database.setDatabaseName(configPath + "umsl.db");
 
     if (!m_database.open()) {
         qDebug() << m_database.lastError();
