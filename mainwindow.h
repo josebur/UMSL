@@ -50,6 +50,8 @@ private Q_SLOTS:
     void startStudy();
     void endStudy();
     void pauseStudy();
+    void exportDatabase();
+    void importDatabase();
 
 private:
     void writeSettings();

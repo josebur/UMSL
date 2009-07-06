@@ -28,7 +28,8 @@
 #include <QDebug>
 #include <QDesktopServices>
 #include <QDir>
-#include <QFileInfo>
+#include <QFile>
+#include <QFileDialog>
 #include <QGraphicsLinearLayout>
 #include <QGraphicsScene>
 #include <QGraphicsWidget>
@@ -331,4 +332,28 @@ void MainWindow::initStudy()
         m_currentStudy->addScene(scene);
     }
     m_ui.timeline->setStudy(m_currentStudy);
+}
+
+void MainWindow::exportDatabase()
+{
+    QString exportFileName = QFileDialog::getSaveFileName(this, "Export Database",
+                                                          QString(), "Database files (*.db)");
+    if (!exportFileName.isEmpty()) {
+        if (!exportFileName.endsWith(".db")) {
+            exportFileName.append(".db");
+        }
+
+        QFile::copy(m_databaseFile, exportFileName);
+    }
+}
+
+void MainWindow::importDatabase()
+{
+    if (QMessageBox::warning(this, "Overwrite Database", "This will overwrite all of your existing "
+                            "studies and all of their scenes. Do you want to continue?",
+                            QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
+        QString databaseFileName = QFileDialog::getOpenFileName(this, "Import Database", QString(),
+                                             "Database files (*.db)");
+        QFile::copy(databaseFileName, m_databaseFile);
+    }
 }
