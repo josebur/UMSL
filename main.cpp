@@ -24,6 +24,10 @@ int main(int argc, char *argv[])
 {
     QApplication::setStyle("cleanlooks");
     QApplication a(argc, argv);
+
+    a.setOrganizationName("UMSL");
+    a.setApplicationName("umsl");
+
     MainWindow w;
     w.show();
     return a.exec();

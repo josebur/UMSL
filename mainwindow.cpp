@@ -26,6 +26,7 @@
 #include "queries.h"
 
 #include <QDebug>
+#include <QDesktopServices>
 #include <QDir>
 #include <QFileInfo>
 #include <QGraphicsLinearLayout>
@@ -47,6 +48,8 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+
+
     m_ui.setupUi(this);
     m_page = new QSplitter(parent);
     m_page->addWidget(m_ui.studiesWidget);
@@ -67,6 +70,8 @@ MainWindow::MainWindow(QWidget *parent)
     m_ui.studyListView->setContextMenuPolicy(Qt::CustomContextMenu);
 
     m_currentStudy = 0;
+
+    qDebug() << QDesktopServices::storageLocation(QDesktopServices::DataLocation);
 
     QModelIndex index = m_studyListModel->index(0, 1);
     if (index.isValid()) {
@@ -245,7 +250,7 @@ void MainWindow::pauseStudy()
 
 void MainWindow::writeSettings()
 {
-    QSettings settings("UMSL", "umsl");
+    QSettings settings;
 
     if (!isMaximized()) {
         settings.setValue("max", false);
@@ -259,7 +264,7 @@ void MainWindow::writeSettings()
 
 void MainWindow::readSettings()
 {
-   QSettings settings("UMSL", "umsl");
+    QSettings settings;
 
    if (settings.value("max", false).toBool()) {
        showMaximized();
