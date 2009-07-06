@@ -58,6 +58,8 @@ private:
     void initStudy();
 
     QSqlDatabase m_database;
+    QString m_databaseDir;
+    QString m_databaseFile;
     StudyListModel *m_studyListModel;
     Study *m_currentStudy;
     QSplitter *m_page;

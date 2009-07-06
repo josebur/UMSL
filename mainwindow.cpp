@@ -48,13 +48,14 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-
-
     m_ui.setupUi(this);
     m_page = new QSplitter(parent);
     m_page->addWidget(m_ui.studiesWidget);
     m_page->addWidget(m_ui.mainWidget);
     setCentralWidget(m_page);
+
+    m_databaseDir = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+    m_databaseFile = m_databaseDir + QDir::separator() + "umsl.db";
 
     readSettings();
 
@@ -70,8 +71,6 @@ MainWindow::MainWindow(QWidget *parent)
     m_ui.studyListView->setContextMenuPolicy(Qt::CustomContextMenu);
 
     m_currentStudy = 0;
-
-    qDebug() << QDesktopServices::storageLocation(QDesktopServices::DataLocation);
 
     QModelIndex index = m_studyListModel->index(0, 1);
     if (index.isValid()) {
@@ -276,19 +275,17 @@ void MainWindow::readSettings()
 }
 
 bool MainWindow::connectToDatabase()
-{
-    QString configPath(QDir::homePath() + QDir::separator() + ".config"
-                       + QDir::separator() + "UMSL" + QDir::separator());
+{   
+    bool createDatabase = false;
 
-    QFileInfo info(configPath + "umsl.db");
     QDir dir;
-    bool createDatabase = !info.exists();
-    if (createDatabase) {
-        dir.mkdir(configPath);
+    if (!dir.exists(dir.relativeFilePath(m_databaseFile))) {
+        dir.mkpath(dir.relativeFilePath(m_databaseDir));
+        createDatabase = true;
     }
 
     m_database = QSqlDatabase::addDatabase("QSQLITE");
-    m_database.setDatabaseName(configPath + "umsl.db");
+    m_database.setDatabaseName(m_databaseFile);
 
     if (!m_database.open()) {
         qDebug() << m_database.lastError();
