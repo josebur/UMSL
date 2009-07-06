@@ -249,8 +249,7 @@ void MainWindow::writeSettings()
 
     if (!isMaximized()) {
         settings.setValue("max", false);
-        settings.setValue("pos", pos());
-        settings.setValue("size", size());
+        settings.setValue("geometry", saveGeometry());
     }
     else {
         settings.setValue("max", true);
@@ -266,8 +265,7 @@ void MainWindow::readSettings()
        showMaximized();
    }
    else {
-       move(settings.value("pos", QPoint(100, 100)).toPoint());
-       resize(settings.value("size", QSize(800, 600)).toSize());
+       restoreGeometry(settings.value("geometry").toByteArray());
    }
    m_page->restoreState(settings.value("splitterSizes").toByteArray());
 }
