@@ -94,6 +94,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_ui.actionRemoveStudy, SIGNAL(triggered()), this, SLOT(removeStudy()));
     connect(m_studyListModel, SIGNAL(primeInsert(int,QSqlRecord&)),
             this, SLOT(setNewStudyName(int, QSqlRecord&)));
+    connect(m_ui.actionImportDatabase, SIGNAL(triggered()), this, SLOT(importDatabase()));
+    connect(m_ui.actionExportDatabase, SIGNAL(triggered()), this, SLOT(exportDatabase()));
     connect(m_ui.actionQuit, SIGNAL(triggered()), this, SLOT(close()));
 }
 
@@ -354,6 +356,15 @@ void MainWindow::importDatabase()
                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
         QString databaseFileName = QFileDialog::getOpenFileName(this, "Import Database", QString(),
                                              "Database files (*.db)");
-        QFile::copy(databaseFileName, m_databaseFile);
+        QDir dir;
+        if (!dir.exists(dir.relativeFilePath(m_databaseFile))) {
+            dir.mkpath(dir.relativeFilePath(m_databaseDir));
+        }
+
+        qDebug() << m_databaseFile;
+        qDebug() << databaseFileName;
+
+        qDebug() << QFile::remove(m_databaseFile);
+        qDebug() << QFile::copy(databaseFileName, m_databaseFile);
     }
 }

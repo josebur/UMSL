@@ -40,7 +40,7 @@ QWidget *StudySceneDelegate::createEditor(QWidget *parent, const QStyleOptionVie
 {
     if (index.column() == 2) {
         QSpinBox *editor = new QSpinBox(parent);
-        editor->setMinimum(0);
+        editor->setMinimum(1);
         editor->setMaximum(MAX_INTEGER);
         return editor;
     }

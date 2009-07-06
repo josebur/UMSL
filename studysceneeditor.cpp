@@ -138,7 +138,7 @@ void StudySceneEditor::populateNewRowValues(int row, QSqlRecord &record)
     Q_UNUSED(row);
 
     record.setValue("name", "Enter New Scene Name");
-    record.setValue("length", 0);
+    record.setValue("length", 1);
     record.setValue("polling", true);
     record.setValue("study", m_studyIndex);
 }

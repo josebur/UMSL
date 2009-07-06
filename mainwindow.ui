@@ -14,7 +14,7 @@
    <string>UMSL</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="usml.qrc">
+   <iconset>
     <normaloff>:/icons/Icons/UMSL_logo.png</normaloff>:/icons/Icons/UMSL_logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -61,7 +61,7 @@
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset resource="usml.qrc">
+          <iconset>
            <normaloff>:/icons/Icons/player_play.png</normaloff>:/icons/Icons/player_play.png</iconset>
          </property>
          <property name="iconSize">
@@ -81,7 +81,7 @@
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset resource="usml.qrc">
+          <iconset>
            <normaloff>:/icons/Icons/player_pause.png</normaloff>:/icons/Icons/player_pause.png</iconset>
          </property>
          <property name="iconSize">
@@ -119,6 +119,15 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <widget class="QMenu" name="menuDatabase">
+     <property name="title">
+      <string>Database</string>
+     </property>
+     <addaction name="actionImportDatabase"/>
+     <addaction name="actionExportDatabase"/>
+    </widget>
+    <addaction name="menuDatabase"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuStudy">
@@ -166,6 +175,16 @@
     <string>Ctrl+R</string>
    </property>
   </action>
+  <action name="actionImportDatabase">
+   <property name="text">
+    <string>Import Database</string>
+   </property>
+  </action>
+  <action name="actionExportDatabase">
+   <property name="text">
+    <string>Export Database</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -175,8 +194,6 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="usml.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
