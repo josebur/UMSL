@@ -82,6 +82,9 @@ MainWindow::MainWindow(QWidget *parent)
     m_ui.dataView->setEnabled(false);
     m_ui.pauseButton->setEnabled(false);
 
+    // Enable when the methods actually work.
+    m_ui.menuDatabase->setDisabled(true);
+
     connect(m_ui.playButton, SIGNAL(clicked()), this, SLOT(startStudy()));
     connect(m_ui.pauseButton, SIGNAL(clicked()), this, SLOT(pauseStudy()));
     connect(m_studyListModel, SIGNAL(dataChanged(const QModelIndex, const QModelIndex)),
@@ -336,6 +339,11 @@ void MainWindow::initStudy()
     m_ui.timeline->setStudy(m_currentStudy);
 }
 
+
+//FIXME: These currently don't work ... going to disable them in the GUI for now.
+//       What probably needs to happen is either, disconnect from the database,
+//       copy the file, and then reconnect for exporting. Importing will be the same
+//       thing, only reversed.
 void MainWindow::exportDatabase()
 {
     QString exportFileName = QFileDialog::getSaveFileName(this, "Export Database",
