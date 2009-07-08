@@ -20,6 +20,13 @@
 #include <QtGui/QApplication>
 #include "mainwindow.h"
 
+#include <QDebug>
+#include <QStringList>
+
+#include <iostream>
+
+using namespace std;
+
 int main(int argc, char *argv[])
 {
     QApplication::setStyle("cleanlooks");
@@ -28,7 +35,26 @@ int main(int argc, char *argv[])
     a.setOrganizationName("UMSL");
     a.setApplicationName("umsl");
 
-    MainWindow w;
-    w.show();
-    return a.exec();
+    QStringList args = a.arguments();
+
+    if (args.count() > 3) {
+        cout << "usage: UMSL [--export-database] filename "
+                "[--import-database] filename [--help]\n";
+        return 0;
+    }
+
+    if (args.count() > 1 && args.at(1) == "--help") {
+        cout << "TODO: help here\n";
+    }
+    else if (args.count() > 1 && args.at(1) == "--export-database") {
+        cout << "check for second argument and export the database\n";
+    }
+    else if (args.count() > 1 && args.at(1) == "--import-database") {
+        cout << "check for second argument and import the database\n";
+    }
+    else {
+        MainWindow w;
+        w.show();
+        return a.exec();
+    }
 }
