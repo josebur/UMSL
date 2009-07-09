@@ -21,11 +21,31 @@
 #include "mainwindow.h"
 
 #include <QDebug>
+#include <QDir>
+#include <QDesktopServices>
+#include <QProcess>
+#include <QString>
 #include <QStringList>
 
 #include <iostream>
 
 using namespace std;
+
+bool exportDatabase(const QString &filename)
+{
+    bool success = false;
+    QString database = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+    database += QDir::separator() + QString("umsl.db");
+
+    if (filename.endsWith(".dump.gz")) {
+        QProcess::execute(QString("echo '.dump' | sqlite3 %1 | gzip -c >%2")
+                          .arg(database).arg(filename));
+
+        success = true;
+    }
+
+    return success;
+}
 
 int main(int argc, char *argv[])
 {
@@ -46,8 +66,10 @@ int main(int argc, char *argv[])
     if (args.count() > 1 && args.at(1) == "--help") {
         cout << "TODO: help here\n";
     }
-    else if (args.count() > 1 && args.at(1) == "--export-database") {
-        cout << "check for second argument and export the database\n";
+    else if (args.count() == 3 && args.at(1) == "--export-database") {
+        if (exportDatabase(args.at(2))) {
+            cout << "Database Exported\n";
+        }
     }
     else if (args.count() > 1 && args.at(1) == "--import-database") {
         cout << "check for second argument and import the database\n";
