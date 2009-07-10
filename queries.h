@@ -25,10 +25,10 @@
 const QString CREATE_SCENES_QUERY = "create table scenes (id INTEGER PRIMARY KEY, "
                                     "name TEXT, length INTEGER, polling BOOLEAN, study INTEGER)";
 const QString CREATE_STUDIES_QUERY = "create table studies (id INTEGER PRIMARY KEY, "
-                                     "name TEXT, pollingInterval INTEGER)";
+                                     "name TEXT)";
 
-const QString TEST_STUDIES = "insert into studies (name, pollingInterval)"
-                             " values ('Test Study', 5)";
+const QString TEST_STUDIES = "insert into studies (name)"
+                             " values ('Test Study')";
 
 const QString TEST_SCENES1 = "insert into scenes (name, length, polling, study) "
                              "values ('scene1', 10, 'true', 1)";

@@ -25,9 +25,8 @@
 #include <QList>
 #include <QString>
 
-Study::Study(const QString name, int pollingInterval)
-    : m_name(name), m_pollingInterval(pollingInterval),
-      m_currentSceneIndex(-1), m_paused(false)
+Study::Study(const QString name)
+    : m_name(name), m_currentSceneIndex(-1), m_paused(false)
 {
     m_length = 0;
 }
@@ -46,16 +45,6 @@ QString Study::name() const
 void Study::setName(const QString name)
 {
     m_name = name;
-}
-
-int Study::pollingInterval() const
-{
-    return m_pollingInterval;
-}
-
-void Study::setPollingInterval(int interval)
-{
-    m_pollingInterval = interval;
 }
 
 QList<AbstractScene *> Study::scenes() const
@@ -117,8 +106,6 @@ void Study::start()
     AbstractScene *currentScene = m_scenes.at(m_currentSceneIndex);
     connect(currentScene, SIGNAL(sceneEnded(AbstractScene *)),
             this, SLOT(startNextScene()));
-    connect(currentScene, SIGNAL(secondTick(AbstractScene *)),
-            this, SLOT(pollScene(AbstractScene *)));
     currentScene->start();
     emit studyStarted(this);
 }
@@ -152,29 +139,7 @@ void Study::startNextScene()
         AbstractScene *currentScene = m_scenes.at(m_currentSceneIndex);
         connect(currentScene, SIGNAL(sceneEnded(AbstractScene *)),
                 this, SLOT(startNextScene()));
-        connect(currentScene, SIGNAL(secondTick(AbstractScene *)),
-            this, SLOT(pollScene(AbstractScene *)));
         currentScene->start();
-    }
-}
-
-void Study::pollScene(AbstractScene *scene)
-{
-    static int currentInterval = 0;
-    static qreal total = 0.0;
-    //qDebug() << "Scene: " << scene->name();
-    if (!scene->pollDuringScene()) {
-        qDebug() << "No Polling";
-    } else {
-        currentInterval++;
-        total += 1.0;       // FIXME: actually get values
-        if (currentInterval == m_pollingInterval) {
-            // calculate the average
-            qDebug() << total << "/" << m_pollingInterval
-                     << " = " << QString::number(total / m_pollingInterval, 'f', 1);
-            currentInterval = 0;
-            total = 0.0;
-        }
     }
 }
 

@@ -35,7 +35,7 @@ class Study : public QObject
 {
     Q_OBJECT
 public:
-    Study(const QString name = QString(), int pollingInterval = 1);
+    Study(const QString name = QString());
     ~Study();
 
     /**
@@ -49,18 +49,6 @@ public:
      * Set the name of the Study
      */
     void setName(const QString name);
-
-    /**
-     * Returns the polling interval which is how
-     * often the values from the dials should be averaged
-     */
-    // FIXME: needs to be renamed to something else
-    //        (averagingInterval?)
-    int pollingInterval() const;
-    /**
-     * Sets the polling interval
-     */
-    void setPollingInterval(int interval);
 
     /**
      * Returns a list of scenes.
@@ -142,14 +130,12 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     void startNextScene();
-    void pollScene(AbstractScene *scene);
 
 private:
     void listScenes() const;
 
     QString m_name;
     QList<AbstractScene *> m_scenes;
-    int m_pollingInterval;
     int m_currentSceneIndex;
     int m_length;
     bool m_paused;
