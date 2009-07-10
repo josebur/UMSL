@@ -23,7 +23,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QDesktopServices>
-#include <QProcess>
+#include <QFile>
 #include <QString>
 #include <QStringList>
 
@@ -37,11 +37,30 @@ bool exportDatabase(const QString &filename)
     QString database = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
     database += QDir::separator() + QString("umsl.db");
 
-    if (filename.endsWith(".dump.gz")) {
-        QProcess::execute(QString("echo '.dump' | sqlite3 %1 | gzip -c >%2")
-                          .arg(database).arg(filename));
+    if (!filename.isEmpty()) {
+        success = QFile::copy(database, filename);
+    }
 
-        success = true;
+    return success;
+}
+
+bool importDatabase(const QString &filename)
+{
+    bool success = false;
+    QString database = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+    QString databaseFile(database + QDir::separator() + "umsl.db");
+
+    QDir dir;
+
+    if (!dir.exists(dir.relativeFilePath(databaseFile))) {
+        dir.mkpath(database);
+    }
+    else {
+        dir.remove(dir.relativeFilePath(databaseFile));
+    }
+
+    if (!filename.isEmpty()) {
+        success = QFile::copy(filename, databaseFile);
     }
 
     return success;
@@ -71,8 +90,10 @@ int main(int argc, char *argv[])
             cout << "Database Exported\n";
         }
     }
-    else if (args.count() > 1 && args.at(1) == "--import-database") {
-        cout << "check for second argument and import the database\n";
+    else if (args.count() == 3 && args.at(1) == "--import-database") {
+        if (importDatabase(args.at(2))) {
+            cout << "Database Imported\n";
+        }
     }
     else {
         MainWindow w;
