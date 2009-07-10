@@ -95,23 +95,23 @@ MainWindow::MainWindow(QWidget *parent)
     m_ui.dataView->setEnabled(false);
     m_ui.pauseButton->setEnabled(false);
 
-    // Enable when the methods actually work.
-    m_ui.menuDatabase->setDisabled(true);
-
+    // Button connections
     connect(m_ui.playButton, SIGNAL(clicked()), this, SLOT(startStudy()));
     connect(m_ui.pauseButton, SIGNAL(clicked()), this, SLOT(pauseStudy()));
+
+    // Study connections
     connect(m_studyListModel, SIGNAL(dataChanged(const QModelIndex, const QModelIndex)),
             this, SLOT(studyChanged(QModelIndex)));
     connect(m_ui.studyListView, SIGNAL(clicked(QModelIndex)), this, SLOT(studyChanged(QModelIndex)));
     connect(m_ui.studyListView, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(showStudyMenu(QPoint)));
+    connect(m_studyListModel, SIGNAL(primeInsert(int,QSqlRecord&)),
+            this, SLOT(setNewStudyName(int, QSqlRecord&)));
+
+    // Menu connections
     connect(m_ui.actionEditStudyScenes, SIGNAL(triggered()), this, SLOT(editStudyScenes()));
     connect(m_ui.actionAddNewStudy, SIGNAL(triggered()), this, SLOT(addNewStudy()));
     connect(m_ui.actionRemoveStudy, SIGNAL(triggered()), this, SLOT(removeStudy()));
-    connect(m_studyListModel, SIGNAL(primeInsert(int,QSqlRecord&)),
-            this, SLOT(setNewStudyName(int, QSqlRecord&)));
-    connect(m_ui.actionImportDatabase, SIGNAL(triggered()), this, SLOT(importDatabase()));
-    connect(m_ui.actionExportDatabase, SIGNAL(triggered()), this, SLOT(exportDatabase()));
     connect(m_ui.actionQuit, SIGNAL(triggered()), this, SLOT(close()));
 }
 
@@ -378,42 +378,4 @@ void MainWindow::initStudy()
         m_currentStudy->addScene(scene);
     }
     m_ui.timeline->setStudy(m_currentStudy);
-}
-
-
-//FIXME: These currently don't work ... going to disable them in the GUI for now.
-//       What probably needs to happen is either, disconnect from the database,
-//       copy the file, and then reconnect for exporting. Importing will be the same
-//       thing, only reversed.
-void MainWindow::exportDatabase()
-{
-    QString exportFileName = QFileDialog::getSaveFileName(this, "Export Database",
-                                                          QString(), "Database files (*.db)");
-    if (!exportFileName.isEmpty()) {
-        if (!exportFileName.endsWith(".db")) {
-            exportFileName.append(".db");
-        }
-
-        QFile::copy(m_databaseFile, exportFileName);
-    }
-}
-
-void MainWindow::importDatabase()
-{
-    if (QMessageBox::warning(this, "Overwrite Database", "This will overwrite all of your existing "
-                            "studies and all of their scenes. Do you want to continue?",
-                            QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes) {
-        QString databaseFileName = QFileDialog::getOpenFileName(this, "Import Database", QString(),
-                                             "Database files (*.db)");
-        QDir dir;
-        if (!dir.exists(dir.relativeFilePath(m_databaseFile))) {
-            dir.mkpath(dir.relativeFilePath(m_databaseDir));
-        }
-
-        qDebug() << m_databaseFile;
-        qDebug() << databaseFileName;
-
-        qDebug() << QFile::remove(m_databaseFile);
-        qDebug() << QFile::copy(databaseFileName, m_databaseFile);
-    }
 }
