@@ -38,7 +38,12 @@ bool exportDatabase(const QString &filename)
     database += QDir::separator() + QString("umsl.db");
 
     if (!filename.isEmpty()) {
-        success = QFile::copy(database, filename);
+        if (filename.endsWith(".db")) {
+            success = QFile::copy(database, filename);
+        }
+        else {
+            cout << "filename must end with the extension .db\n";
+        }
     }
 
     return success;
@@ -60,7 +65,12 @@ bool importDatabase(const QString &filename)
     }
 
     if (!filename.isEmpty()) {
-        success = QFile::copy(filename, databaseFile);
+        if (filename.endsWith(".db")) {
+            success = QFile::copy(filename, databaseFile);
+        }
+        else {
+            cout << "filename must end with the extension .db\n";
+        }
     }
 
     return success;
@@ -79,20 +89,28 @@ int main(int argc, char *argv[])
     if (args.count() > 3) {
         cout << "usage: UMSL [--export-database] filename "
                 "[--import-database] filename [--help]\n";
-        return 0;
+        return -1;
     }
 
     if (args.count() > 1 && args.at(1) == "--help") {
-        cout << "TODO: help here\n";
+        cout << "TODO\n";
+        return 0;
     }
-    else if (args.count() == 3 && args.at(1) == "--export-database") {
-        if (exportDatabase(args.at(2))) {
-            cout << "Database Exported\n";
+    else if (args.count() >= 2 && args.at(1) == "--export-database") {
+        if (args.count() == 2) {
+            cout << "--export-database needs a filename argument\n";
+            return -1;
+        }
+        else if (exportDatabase(args.at(2))) {
+            cout << "Database Exported Sucessfully\n";
         }
     }
-    else if (args.count() == 3 && args.at(1) == "--import-database") {
-        if (importDatabase(args.at(2))) {
-            cout << "Database Imported\n";
+    else if (args.count() >= 2 && args.at(1) == "--import-database") {
+        if (args.count() == 2) {
+            cout << "--import-database needs a filename argument\n";
+        }
+        else if (importDatabase(args.at(2))) {
+            cout << "Database Imported Sucessfully\n";
         }
     }
     else {
