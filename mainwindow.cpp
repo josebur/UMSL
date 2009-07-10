@@ -46,6 +46,8 @@
 
 #include "phidget21.h"
 
+const int NUMBER_OF_SEATS = 8;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -53,10 +55,21 @@ MainWindow::MainWindow(QWidget *parent)
     m_page = new QSplitter(parent);
     m_page->addWidget(m_ui.studiesWidget);
     m_page->addWidget(m_ui.mainWidget);
+    m_page->addWidget(m_ui.studyOptionsWidget);
     setCentralWidget(m_page);
 
     m_databaseDir = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
     m_databaseFile = m_databaseDir + QDir::separator() + "umsl.db";
+
+    // This is a horrible way to do this but it will work for 1.0
+    m_seats.append(m_ui.seat1);
+    m_seats.append(m_ui.seat2);
+    m_seats.append(m_ui.seat3);
+    m_seats.append(m_ui.seat4);
+    m_seats.append(m_ui.seat5);
+    m_seats.append(m_ui.seat6);
+    m_seats.append(m_ui.seat7);
+    m_seats.append(m_ui.seat8);
 
     readSettings();
 
@@ -265,6 +278,17 @@ void MainWindow::writeSettings()
         settings.setValue("max", true);
     }
     settings.setValue("splitterSizes", m_page->saveState());
+
+    QString seats;
+    int i = 0;
+    foreach(const QCheckBox *seat, m_seats) {
+        if (seat->isChecked()) {
+            seats.append(QString::number(i+1));
+        }
+        ++i;
+    }
+    settings.setValue("seatsChecked", seats);
+    settings.setValue("averageInterval", m_ui.averageSpinBox->value());
 }
 
 void MainWindow::readSettings()
@@ -278,6 +302,15 @@ void MainWindow::readSettings()
        restoreGeometry(settings.value("geometry").toByteArray());
    }
    m_page->restoreState(settings.value("splitterSizes").toByteArray());
+
+   QString seats = settings.value("seatsChecked", QVariant()).toString();
+   for (int i = 0; i < NUMBER_OF_SEATS; ++i) {
+       if (seats.contains(QString::number(i+1))) {
+            m_seats.at(i)->setChecked(true);
+       }
+   }
+
+   m_ui.averageSpinBox->setValue(settings.value("averageInterval", 1).toInt());
 }
 
 bool MainWindow::connectToDatabase()

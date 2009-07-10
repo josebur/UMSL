@@ -87,13 +87,14 @@ int main(int argc, char *argv[])
     QStringList args = a.arguments();
 
     if (args.count() > 3) {
-        cout << "usage: UMSL [--export-database] filename "
-                "[--import-database] filename [--help]\n";
+        cout << "usage: UMSL [--export-database] filename.db "
+                "[--import-database] filename.db [--help]\n";
         return -1;
     }
 
     if (args.count() > 1 && args.at(1) == "--help") {
-        cout << "TODO\n";
+        cout << "usage: UMSL [--export-database] filename.db "
+                "[--import-database] filename.db [--help]\n";
         return 0;
     }
     else if (args.count() >= 2 && args.at(1) == "--export-database") {

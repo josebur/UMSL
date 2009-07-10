@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>790</width>
+    <width>1083</width>
     <height>512</height>
    </rect>
   </property>
@@ -14,7 +14,7 @@
    <string>UMSL</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="usml.qrc">
     <normaloff>:/icons/Icons/UMSL_logo.png</normaloff>:/icons/Icons/UMSL_logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -61,7 +61,7 @@
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="usml.qrc">
            <normaloff>:/icons/Icons/player_play.png</normaloff>:/icons/Icons/player_play.png</iconset>
          </property>
          <property name="iconSize">
@@ -81,7 +81,7 @@
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="usml.qrc">
            <normaloff>:/icons/Icons/player_pause.png</normaloff>:/icons/Icons/player_pause.png</iconset>
          </property>
          <property name="iconSize">
@@ -101,7 +101,115 @@
       </layout>
      </item>
      <item>
+      <widget class="QSpinBox" name="averageSpinBox">
+       <property name="suffix">
+        <string> second(s)</string>
+       </property>
+       <property name="prefix">
+        <string>Average every </string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QTextEdit" name="dataView"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="studyOptionsWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>20</y>
+      <width>231</width>
+      <height>260</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Seats Occupied:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="seat1">
+       <property name="text">
+        <string>Seat 1</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="seat2">
+       <property name="text">
+        <string>Seat 2</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="seat3">
+       <property name="text">
+        <string>Seat 3</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="seat4">
+       <property name="text">
+        <string>Seat 4</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="seat5">
+       <property name="text">
+        <string>Seat 5</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="seat6">
+       <property name="text">
+        <string>Seat 6</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="seat7">
+       <property name="text">
+        <string>Seat 7</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="seat8">
+       <property name="text">
+        <string>Seat 8</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </widget>
@@ -111,8 +219,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>790</width>
-     <height>28</height>
+     <width>1083</width>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -194,6 +302,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="usml.qrc"/>
+ </resources>
  <connections/>
 </ui>

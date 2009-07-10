@@ -65,6 +65,7 @@ private:
     StudyListModel *m_studyListModel;
     Study *m_currentStudy;
     QSplitter *m_page;
+    QList<QCheckBox *> m_seats;
     Ui::MainWindow m_ui;
 };
 
