@@ -243,6 +243,8 @@ void MainWindow::startStudy()
     m_ui.pauseButton->setEnabled(true);
     m_ui.studyListView->setDisabled(true);
     m_ui.menuStudy->setDisabled(true);
+    m_ui.averageSpinBox->setDisabled(true);
+    m_ui.studyOptionsWidget->setDisabled(true);
     if (m_currentStudy->isPaused()) {
         m_currentStudy->resume();
     }
@@ -257,6 +259,8 @@ void MainWindow::endStudy()
     m_ui.pauseButton->setEnabled(false);
     m_ui.studyListView->setEnabled(true);
     m_ui.menuStudy->setEnabled(true);
+    m_ui.averageSpinBox->setEnabled(true);
+    m_ui.studyOptionsWidget->setEnabled(true);
 
     QModelIndex index = m_ui.studyListView->selectionModel()->currentIndex();
     studyChanged(index);
