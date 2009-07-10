@@ -235,6 +235,10 @@ void MainWindow::startStudy()
 {
     qDebug() << "startStudy called";
 
+    if (!m_currentStudy) {
+        return;
+    }
+
     m_ui.playButton->setDisabled(true);
     m_ui.pauseButton->setEnabled(true);
     m_ui.studyListView->setDisabled(true);
