@@ -42,7 +42,7 @@ bool exportDatabase(const QString &filename)
             success = QFile::copy(database, filename);
         }
         else {
-            cout << "filename must end with the extension .db\n";
+            cout << "filename must end with the extension \".db\"\n";
         }
     }
 
@@ -69,7 +69,7 @@ bool importDatabase(const QString &filename)
             success = QFile::copy(filename, databaseFile);
         }
         else {
-            cout << "filename must end with the extension .db\n";
+            cout << "filename must end with the extension \".db\"\n";
         }
     }
 
