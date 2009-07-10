@@ -111,7 +111,7 @@ bool StudySceneEditor::addNewScene(const QString &buttonText)
     m_ui.sceneView->selectionModel()->setCurrentIndex(index,
                                                       QItemSelectionModel::Select);
     m_ui.sceneView->scrollTo(index);
-    m_ui.sceneView->openPersistentEditor(index);
+//    m_ui.sceneView->openPersistentEditor(index);
     m_ui.sceneView->setFocus();
     return ok;
 }
