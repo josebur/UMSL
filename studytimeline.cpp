@@ -123,7 +123,6 @@ void StudyTimeLine::updateCurrentTime()
         m_currentTime = 0;
     }
     update();
-    qDebug() << m_currentTime;
 }
 
 void StudyTimeLine::calculateRects()
