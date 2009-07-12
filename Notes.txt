@@ -1,48 +1,16 @@
 TODO
 ----
+* Polling Class
 * Poll Every Second ... Don't worry about averaging yet.
 * Two Files ... Raw Data and then optional averaging data.
 * How to handle scenes that that aren't divisable by averaging interval?
-* Be able to pause study.
 
-* Need to figure out the timeline and pausing. Both are very high priority!!
-Timeline Class
----------------
-QWidget Subclass
-StudyTimeline(Study *)
-need to reimplement paintEvent()
-should have a QVector<QRectF> m_rects
+Polling Class
+-------------
+Since we don't want to tie ourselves to closely to the Phigets hardware, there is an
+AbstractPollingDevice class that contains the API for the polling devices. Right now 
+the only subclass of that should be the "dummy file method" but when the hardward gets
+here, I'll be able to create another subclass (PhidgetsPollingDevice) that will handle 
+the various polling of the Phidgets hardware.
 
-In the Constructor, call a function to go through the scenes and calculate the rects
-for them. Then in pain event, should just be able to call QPainter::drawRects(m_rects).
-
-Drawing Calculations
---------------------
-total number of seconds = 60
-total width in pixels = 100
-
-pixels per second = 100 / 60 = 1.6666666666666667
-
-scene.length() == 10 --> pixels wide = 10 * 1.666666666666666
-
-y1 = 0;
-x1 = x2 = m_currentSecond * pixelsPerSecond
-y2 = height()
-
-Smoother Animation
-------------------
-StudyTimeLine needs a QTimer and two new slots called startIndicator and stopIndicator.
-In the constructor the timer needs to be connected to the paintEvent() which will update the indicator
-more frequently and by a smaller margin which should give a smoother animation.
-
-startIndicator()
-m_timer->start();
-
-stopIndicator()
-m_timer->stop();
-m_currentPostion = 0.0;
-
-paint()
-pixelsPerAnimation = width() / (m_study->length() * 60);
-m_currentPosition += pixelsPerAnimation;
-then paint the indicator line.
+*API notes go here*

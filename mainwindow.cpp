@@ -233,7 +233,8 @@ void MainWindow::showStudyMenu(QPoint point)
 
 void MainWindow::startStudy()
 {
-    qDebug() << "startStudy called";
+    qDebug() << "startStudy called\n"
+             << "average every " << m_ui.averageSpinBox->value() << " seconds";
 
     if (!m_currentStudy) {
         return;
