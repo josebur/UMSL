@@ -90,6 +90,7 @@ MainWindow::MainWindow(QWidget *parent)
     if (index.isValid()) {
         m_ui.studyListView->setCurrentIndex(index);
         studyChanged(index);
+        m_currentSecond = 0;
     }
 
     m_ui.dataView->setEnabled(false);
@@ -207,6 +208,7 @@ void MainWindow::studyChanged(const QModelIndex &index)
 
         connect(m_currentStudy, SIGNAL(studyEnded(Study*)),
                 this, SLOT(endStudy()));
+        connect(m_currentStudy, SIGNAL(studyTick()), this, SLOT(studyTick()));
     }
 }
 
@@ -250,6 +252,7 @@ void MainWindow::startStudy()
         m_currentStudy->resume();
     }
     else {
+        m_currentSecond = 0;
         m_currentStudy->start();
     }
 }
@@ -273,6 +276,13 @@ void MainWindow::pauseStudy()
     m_ui.pauseButton->setDisabled(true);
 
     m_currentStudy->pause();
+}
+
+void MainWindow::studyTick()
+{
+    m_currentSecond++;
+    m_ui.studyTimeLabel->setText(QString("%1/%2").arg(m_currentSecond)
+                                 .arg(m_currentStudy->length()));
 }
 
 void MainWindow::writeSettings()
@@ -379,4 +389,5 @@ void MainWindow::initStudy()
         m_currentStudy->addScene(scene);
     }
     m_ui.timeline->setStudy(m_currentStudy);
+    m_ui.studyTimeLabel->setText(QString("0/%1").arg(m_currentStudy->length()));
 }

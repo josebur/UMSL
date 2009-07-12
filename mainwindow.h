@@ -50,6 +50,7 @@ private Q_SLOTS:
     void startStudy();
     void endStudy();
     void pauseStudy();
+    void studyTick();
 
 private:
     void writeSettings();
@@ -62,6 +63,7 @@ private:
     QString m_databaseFile;
     StudyListModel *m_studyListModel;
     Study *m_currentStudy;
+    int m_currentSecond;
     QSplitter *m_page;
     QList<QCheckBox *> m_seats;
     Ui::MainWindow m_ui;

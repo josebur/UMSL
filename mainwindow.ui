@@ -45,13 +45,13 @@
      <rect>
       <x>300</x>
       <y>20</y>
-      <width>451</width>
-      <height>361</height>
+      <width>264</width>
+      <height>275</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="10,10,70,5">
        <item>
         <widget class="QToolButton" name="playButton">
          <property name="toolTip">
@@ -96,7 +96,42 @@
         </widget>
        </item>
        <item>
-        <widget class="StudyTimeLine" name="timeline" native="true"/>
+        <widget class="StudyTimeLine" name="timeline" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>30</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="studyTimeLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>20</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>0/0</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -220,7 +255,7 @@
      <x>0</x>
      <y>0</y>
      <width>1083</width>
-     <height>28</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
