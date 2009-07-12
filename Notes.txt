@@ -13,4 +13,51 @@ the only subclass of that should be the "dummy file method" but when the hardwar
 here, I'll be able to create another subclass (PhidgetsPollingDevice) that will handle 
 the various polling of the Phidgets hardware.
 
-*API notes go here*
+Actually on second thought, I'll probably just code the PhidgetPollingDevice first
+and tie this app to it and if the need to support new hardware comes along, I'll refactor the current code to use the Factory Method pattern to pick which hardware to use.
+
+Relavent Functions for Phidgets Polling
+---------------------------------------
+CPhidgetInterfaceKit_getSensorCount(phid, &numSensors);
+
+numSensors is the number of sensors supported by the board so in our case it will 
+be 8.
+Then the seat # will correspond to the InterfaceKit index of the Sensor
+(e.g. Seat 1 -> Sensor Index 1).
+
+int pollDevice(const Device &dev)
+{
+   int number = dev.number();
+   int value;
+   CPhidgetInterfaceKit_getSensorValue(phid, number, value);
+
+   return value;
+}
+
+Attach and Detach
+-----------------
+I'll need to create handlers for attach and detach.
+For attach I'll display a message to the console.
+For detach, if there is a study in progress, I'll pause the study
+and display a message saying that Seat #'s dial has been unplugged.
+There will also be a message displayed to the console in either case.
+
+
+On App Load
+-----------
+Probably after the database loads, I'll open the PhidgetsInterface and
+have it display its various stats to the console.
+
+On App Close
+------------
+I'll need to call CPhidget_close() and CPhidget_delete()
+
+After the 1.0 Release
+---------------------
+* Make a separate UI to import/export the database.
+  This should not be seen by the user of the application.
+  Should probably be called something like UMSL-config or something
+  along those lines.
+
+* Use either a different method for showing the current progress of the study
+  or smooth the animation of the timeline indicator.
