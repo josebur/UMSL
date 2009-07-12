@@ -280,9 +280,12 @@ void MainWindow::pauseStudy()
 
 void MainWindow::studyTick()
 {
+    // TODO:: format the time
     m_currentSecond++;
     m_ui.studyTimeLabel->setText(QString("%1/%2").arg(m_currentSecond)
                                  .arg(m_currentStudy->length()));
+
+    // polling stuff will go here...
 }
 
 void MainWindow::writeSettings()
