@@ -51,7 +51,7 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout" stretch="10,10,70,5">
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="10,10,70,10">
        <item>
         <widget class="QToolButton" name="playButton">
          <property name="toolTip">
@@ -121,7 +121,7 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>20</width>
+           <width>30</width>
            <height>30</height>
           </size>
          </property>

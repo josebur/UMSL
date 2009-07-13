@@ -43,6 +43,7 @@
 #include <QSqlRelationalDelegate>
 #include <QSqlRelationalTableModel>
 #include <QTableView>
+#include <QTime>
 
 #include "phidget21.h"
 
@@ -135,6 +136,7 @@ void MainWindow::addNewStudy()
     if (index.isValid()) {
         m_ui.studyListView->setCurrentIndex(index);
         m_ui.studyListView->scrollTo(index, QAbstractItemView::EnsureVisible);
+        statusBar()->showMessage("New Study Created", 2000);
     }
 }
 
@@ -160,6 +162,7 @@ void MainWindow::removeStudy()
         query.exec();
 
         m_studyListModel->removeRow(index.row());
+        statusBar()->showMessage("Study Deleted", 2000);
     }
 }
 
@@ -250,10 +253,12 @@ void MainWindow::startStudy()
     m_ui.studyOptionsWidget->setDisabled(true);
     if (m_currentStudy->isPaused()) {
         m_currentStudy->resume();
+        statusBar()->showMessage(m_currentStudy->name() + "Resumed", 2000);
     }
     else {
         m_currentSecond = 0;
         m_currentStudy->start();
+        statusBar()->showMessage(m_currentStudy->name() + "Started", 2000);
     }
 }
 
@@ -266,6 +271,9 @@ void MainWindow::endStudy()
     m_ui.averageSpinBox->setEnabled(true);
     m_ui.studyOptionsWidget->setEnabled(true);
 
+    QString name = m_currentStudy->name();
+    statusBar()->showMessage(name + " Ended", 2000);
+
     QModelIndex index = m_ui.studyListView->selectionModel()->currentIndex();
     studyChanged(index);
 }
@@ -276,14 +284,18 @@ void MainWindow::pauseStudy()
     m_ui.pauseButton->setDisabled(true);
 
     m_currentStudy->pause();
+    statusBar()->showMessage(m_currentStudy->name() + " Paused", 2000);
 }
 
 void MainWindow::studyTick()
 {
-    // TODO:: format the time
     m_currentSecond++;
-    m_ui.studyTimeLabel->setText(QString("%1/%2").arg(m_currentSecond)
-                                 .arg(m_currentStudy->length()));
+    int studySeconds = m_currentStudy->length();
+    QTime currentTime(0, m_currentSecond / 60, m_currentSecond % 60);
+    QTime studyTime(0, studySeconds / 60, studySeconds % 60);
+    m_ui.studyTimeLabel->setText(QString("%1/%2")
+                                 .arg(currentTime.toString("mm:ss"))
+                                 .arg(studyTime.toString("mm:ss")));
 
     // polling stuff will go here...
 }
@@ -392,5 +404,7 @@ void MainWindow::initStudy()
         m_currentStudy->addScene(scene);
     }
     m_ui.timeline->setStudy(m_currentStudy);
-    m_ui.studyTimeLabel->setText(QString("0/%1").arg(m_currentStudy->length()));
+
+    QTime time(0, m_currentStudy->length() / 60, m_currentStudy->length() % 60);
+    m_ui.studyTimeLabel->setText(QString("00:00/%1").arg(time.toString("mm:ss")));
 }
