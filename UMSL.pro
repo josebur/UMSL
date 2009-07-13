@@ -14,7 +14,7 @@ SOURCES += main.cpp \
     studyscenemodel.cpp \
     studylistmodel.cpp \
     studytimeline.cpp \
-    phidget.cpp
+    phidgetpollingdevice.cpp
 HEADERS += mainwindow.h \
     scene.h \
     study.h \
@@ -24,7 +24,7 @@ HEADERS += mainwindow.h \
     studyscenemodel.h \
     studylistmodel.h \
     studytimeline.h \
-    phidget.h
+    phidgetpollingdevice.h
 FORMS += mainwindow.ui \
     studysceneeditor.ui
 RESOURCES += usml.qrc

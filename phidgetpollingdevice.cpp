@@ -22,9 +22,28 @@ bool PhidgetPollingDevice::init()
     CPhidget_set_OnError_Handler((CPhidgetHandle)m_handle, ErrorHandler, NULL);
 
     qDebug() << CPhidget_open((CPhidgetHandle)m_handle, -1);
+    displayStats();
     return true;
 }
 
+void PhidgetPollingDevice::displayStats()
+{
+    int serialNumber = 0;
+    int version = 0;
+    int numSensors = 0;
+    const char *name = "";
+
+    CPhidget_getDeviceType((CPhidgetHandle)m_handle, &name);
+    CPhidget_getSerialNumber((CPhidgetHandle)m_handle, &serialNumber);
+    CPhidget_getDeviceVersion((CPhidgetHandle)m_handle, &version);
+    CPhidgetInterfaceKit_getSensorCount(m_handle, &numSensors);
+
+    qDebug() << name;
+    qDebug() << "Serial Number: " << serialNumber << " Version: " << version;
+    qDebug() << "# Sensors: " << numSensors;
+}
+
+// For some reason, these needed to be in the global space to work.
 int AttachHandler(CPhidgetHandle handle, void *userptr)
 {
     int serialNumber;

@@ -22,6 +22,8 @@
 
 #include "ui_mainwindow.h"
 
+#include "phidgetpollingdevice.h"
+
 #include <QSqlDatabase>
 
 class QSplitter;
@@ -66,6 +68,7 @@ private:
     int m_currentSecond;
     QSplitter *m_page;
     QList<QCheckBox *> m_seats;
+    PhidgetPollingDevice m_pollingDevice;
     Ui::MainWindow m_ui;
 };
 

@@ -19,7 +19,8 @@
 
 #include "mainwindow.h"
 
-#include "phidget.h"
+#include "phidget21.h"
+#include "phidgetpollingdevice.h"
 #include "scene.h"
 #include "study.h"
 #include "studylistmodel.h"
@@ -96,9 +97,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_ui.dataView->setEnabled(false);
     m_ui.pauseButton->setEnabled(false);
 
-    if (!Phidget::self()->init()) {
-        qDebug() << "Error with the Phidget Hardware";
-    }
+    m_pollingDevice.init();
 
     // Button connections
     connect(m_ui.playButton, SIGNAL(clicked()), this, SLOT(startStudy()));

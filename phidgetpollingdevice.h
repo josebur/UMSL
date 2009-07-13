@@ -10,12 +10,10 @@ class PhidgetPollingDevice
 public:
     PhidgetPollingDevice(MainWindow *mainWindow = 0);
     bool init();
-//    int AttachHandler(CPhidgetHandle handle, void *userptr);
-//    int DetachHandler(CPhidgetHandle handle, void *userptr);
-//    int ErrorHandler(CPhidgetHandle handle, void *userptr,
-//                     int ErrorCode, const char *unknown);
 
 private:
+    void displayStats();
+
     MainWindow *m_mainWindow;
     CPhidgetInterfaceKitHandle m_handle;
 };
