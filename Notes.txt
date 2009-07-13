@@ -16,6 +16,21 @@ the various polling of the Phidgets hardware.
 Actually on second thought, I'll probably just code the PhidgetPollingDevice first
 and tie this app to it and if the need to support new hardware comes along, I'll refactor the current code to use the Factory Method pattern to pick which hardware to use.
 
+Phidget Polling Classes
+-----------------------
+- PhidgetInterfaceKit()
+  Mostly just a wrapper around the CPhidgetInterfaceKit code.
+  A Singleton class that is created when the app starts. 
+attachHandler() - will be called when the devices are attached (see below).
+detachHandler() - will be called when the devices are detached (see below).
+errorHandler()  - will be called if there is ever an error of some kind.
+init()		- sets up the InterfaceKit and registers the handlers.
+
+- PhidgetSensor()
+  Not much of a class.. not sure if will amount to much =)
+isActive() - should this device be polled?
+poll()	   - get the current value of the sensor
+
 Relavent Functions for Phidgets Polling
 ---------------------------------------
 CPhidgetInterfaceKit_getSensorCount(phid, &numSensors);
