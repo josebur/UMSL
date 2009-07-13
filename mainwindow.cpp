@@ -19,6 +19,7 @@
 
 #include "mainwindow.h"
 
+#include "phidget.h"
 #include "scene.h"
 #include "study.h"
 #include "studylistmodel.h"
@@ -44,8 +45,6 @@
 #include <QSqlRelationalTableModel>
 #include <QTableView>
 #include <QTime>
-
-#include "phidget21.h"
 
 const int NUMBER_OF_SEATS = 8;
 
@@ -96,6 +95,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_ui.dataView->setEnabled(false);
     m_ui.pauseButton->setEnabled(false);
+
+    if (!Phidget::self()->init()) {
+        qDebug() << "Error with the Phidget Hardware";
+    }
 
     // Button connections
     connect(m_ui.playButton, SIGNAL(clicked()), this, SLOT(startStudy()));
