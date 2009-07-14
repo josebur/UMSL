@@ -19,7 +19,6 @@
 
 #include "mainwindow.h"
 
-#include "phidget21.h"
 #include "phidgetpollingdevice.h"
 #include "scene.h"
 #include "study.h"
@@ -299,7 +298,13 @@ void MainWindow::studyTick()
                                  .arg(currentTime.toString("mm:ss"))
                                  .arg(studyTime.toString("mm:ss")));
 
-    // polling stuff will go here...
+    // poll the devices (test code)
+    for (int i = 0; i < m_seats.count(); ++i) {
+        if (m_seats.at(i)->isChecked()) {
+            int value = m_pollingDevice.pollDevice(i);
+            qDebug() << value;
+        }
+    }
 }
 
 void MainWindow::writeSettings()
