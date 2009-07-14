@@ -26,6 +26,18 @@ bool PhidgetPollingDevice::init()
     return true;
 }
 
+int PhidgetPollingDevice::pollDevice(int index)
+{
+    int sensorCount;
+    int value = -1;
+    CPhidgetInterfaceKit_getSensorCount(m_handle, &sensorCount);
+    if (index >= 0 && index <= sensorCount) {
+        CPhidgetInterfaceKit_getSensorValue(m_handle, index, &value);
+    }
+
+    return value;
+}
+
 void PhidgetPollingDevice::displayStats()
 {
     int serialNumber = 0;
@@ -44,7 +56,7 @@ void PhidgetPollingDevice::displayStats()
 }
 
 // For some reason, these needed to be in the global space to work.
-int AttachHandler(CPhidgetHandle handle, void *userptr)
+int AttachHandler(CPhidgetHandle handle, void */*userptr*/)
 {
     int serialNumber;
     const char *name;
@@ -57,7 +69,7 @@ int AttachHandler(CPhidgetHandle handle, void *userptr)
     return 0;
 }
 
-int DetachHandler(CPhidgetHandle handle, void *userptr)
+int DetachHandler(CPhidgetHandle handle, void */*userptr*/)
 {
     int serialNumber;
     const char *name;
@@ -70,7 +82,7 @@ int DetachHandler(CPhidgetHandle handle, void *userptr)
     return 0;
 }
 
-int ErrorHandler(CPhidgetHandle handle, void *userptr, int ErrorCode, const char *unknown)
+int ErrorHandler(CPhidgetHandle /*handle*/, void */*userptr*/, int ErrorCode, const char *unknown)
 {
     qDebug() << "Error handled. " << ErrorCode << " " << unknown;
     return 0;

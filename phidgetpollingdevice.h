@@ -10,6 +10,7 @@ class PhidgetPollingDevice
 public:
     PhidgetPollingDevice(MainWindow *mainWindow = 0);
     bool init();
+    int pollDevice(int index);
 
 private:
     void displayStats();
