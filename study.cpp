@@ -94,6 +94,11 @@ int Study::length() const
     return m_length;
 }
 
+AbstractScene *Study::currentScene() const
+{
+    return m_scenes.at(m_currentSceneIndex);
+}
+
 void Study::start()
 {
     if (m_scenes.empty()) {
@@ -132,7 +137,6 @@ void Study::startNextScene()
     if (m_currentSceneIndex + 1 == m_scenes.size()) {
         qDebug() << "Study Over";
         emit studyEnded(this);
-        return;
     }
     else {
         m_currentSceneIndex++;

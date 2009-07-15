@@ -73,7 +73,6 @@ void AbstractScene::start()
 {
     m_currentSecond = 0;
     connect(m_timer, SIGNAL(timeout()), this, SLOT(timeout()));
-    connect(m_timer, SIGNAL(timeout()), this, SLOT(slotTimerTick()));
     m_timer->start(1000);
     emit sceneStarted(this);
 }
@@ -102,14 +101,10 @@ void AbstractScene::timeout()
     qDebug() << "Scene " << m_name << " is at second " << m_currentSecond
              << " of " << m_length << "at " << time.currentTime().toString()
              << " polling is on = " << m_polling;
-    if (m_currentSecond == m_length) {
+    emit secondTick(this);
+    if (m_currentSecond == m_length) {       
         end();
     }
-}
-
-void AbstractScene::slotTimerTick()
-{
-    emit secondTick(this);
 }
 
 Scene::Scene(const QString name, const int length)

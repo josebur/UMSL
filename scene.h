@@ -118,9 +118,6 @@ Q_SIGNALS:
      */
     void secondTick(AbstractScene *scene);
 
-private Q_SLOTS:
-    void slotTimerTick();
-
 private:
     QString m_name;
     int m_length;
