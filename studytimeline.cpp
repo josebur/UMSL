@@ -45,7 +45,6 @@ void StudyTimeLine::setStudy(Study *study)
 {
     m_study = study;
     connect(m_study, SIGNAL(studyTick()), this, SLOT(updateCurrentTime()));
-    connect(m_study, SIGNAL(studyEnded(Study*)), this, SLOT(updateCurrentTime()));
     calculateRects();
     update();
 }

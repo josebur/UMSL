@@ -88,6 +88,11 @@ public:
      */
     int length() const;
 
+    /**
+     * Get the current scene that the study is playing, if any.
+     */
+    AbstractScene *currentScene() const;
+
 public Q_SLOTS:
     /**
      * Start the timer on the Study. The scenes are

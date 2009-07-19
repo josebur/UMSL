@@ -300,10 +300,12 @@ void MainWindow::studyTick()
                                  .arg(studyTime.toString("mm:ss")));
 
     // poll the devices (test code)
-    for (int i = 0; i < m_seats.count(); ++i) {
-        if (m_seats.at(i)->isChecked()) {
-            int value = m_pollingDevice.pollDevice(i);
-            qDebug() << value;
+    if (m_currentStudy->currentScene()->pollDuringScene()) {
+        for (int i = 0; i < m_seats.count(); ++i) {
+            if (m_seats.at(i)->isChecked()) {
+                int value = m_pollingDevice.pollDevice(i);
+                qDebug() << value;
+            }
         }
     }
 }
