@@ -290,6 +290,7 @@ void MainWindow::pauseStudy()
 
 void MainWindow::studyTick()
 {
+    qDebug() << "studyTick()";
     m_currentSecond++;
     int studySeconds = m_currentStudy->length();
     QTime currentTime(0, m_currentSecond / 60, m_currentSecond % 60);
