@@ -28,16 +28,27 @@ int DataTableModel::columnCount(const QModelIndex &parent) const
     return m_cols;
 }
 
-//Qt::ItemFlags DataTableModel::flags(const QModelIndex &index) const
-//{
-//
-//}
-
 QVariant DataTableModel::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole) {
         return m_data.at(index.row()).at(index.column());
     }
 
+    return QVariant();
+}
+
+QVariant DataTableModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    if (role == Qt::DisplayRole) {
+        if (orientation == Qt::Vertical) {
+            return QString("Seat %1").arg(section + 1);
+        }
+        else if (orientation == Qt::Horizontal) {
+            return QString("%1").arg(section + 1);
+        }
+        else {
+            return QVariant();
+        }
+    }
     return QVariant();
 }
