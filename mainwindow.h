@@ -28,6 +28,7 @@
 
 class QSplitter;
 
+class DataTableModel;
 class Study;
 class StudyListModel;
 
@@ -68,6 +69,7 @@ private:
     int m_currentSecond;
     QSplitter *m_page;
     QList<QCheckBox *> m_seats;
+    DataTableModel *m_dataModel;
     PhidgetPollingDevice m_pollingDevice;
     Ui::MainWindow m_ui;
 };

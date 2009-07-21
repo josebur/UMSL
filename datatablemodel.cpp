@@ -1,11 +1,19 @@
 #include "datatablemodel.h"
 
 #include <QAbstractTableModel>
+#include <QDebug>
 #include <QList>
 
 DataTableModel::DataTableModel(QObject *parent, int rows, int columns)
     : QAbstractTableModel(parent), m_rows(rows), m_cols(columns)
 {
+    for (int i = 0; i < m_rows; ++i) {
+        QList<qreal> list;
+        for (int j = 0; j < m_cols; ++j) {
+            list.append(0.0);
+        }
+        m_data.append(list);
+    }
 }
 
 int DataTableModel::rowCount(const QModelIndex &parent) const

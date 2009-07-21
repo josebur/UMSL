@@ -19,6 +19,7 @@
 
 #include "mainwindow.h"
 
+#include "datatablemodel.h"
 #include "phidgetpollingdevice.h"
 #include "scene.h"
 #include "study.h"
@@ -85,6 +86,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_ui.studyListView->setContextMenuPolicy(Qt::CustomContextMenu);
 
     m_currentStudy = 0;
+    m_dataModel = 0;
 
     QModelIndex index = m_studyListModel->index(0, 1);
     if (index.isValid()) {
@@ -261,6 +263,13 @@ void MainWindow::startStudy()
         m_currentStudy->start();
         statusBar()->showMessage(m_currentStudy->name() + "Started", 2000);
     }
+
+    //create a new data model
+    if (m_dataModel) {
+        delete m_dataModel;
+    }
+    m_dataModel = new DataTableModel(this, 8, m_currentStudy->length());
+    m_ui.dataView->setModel(m_dataModel);
 }
 
 void MainWindow::endStudy()
@@ -271,6 +280,7 @@ void MainWindow::endStudy()
     m_ui.menuStudy->setEnabled(true);
     m_ui.averageSpinBox->setEnabled(true);
     m_ui.studyOptionsWidget->setEnabled(true);
+    m_ui.dataView->setEnabled(true);
 
     QString name = m_currentStudy->name();
     statusBar()->showMessage(name + " Ended", 2000);
