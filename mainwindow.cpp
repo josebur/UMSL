@@ -268,7 +268,7 @@ void MainWindow::startStudy()
     if (m_dataModel) {
         delete m_dataModel;
     }
-    m_dataModel = new DataTableModel(this, 8, m_currentStudy->length());
+    m_dataModel = new DataTableModel(this, m_currentStudy);
     m_ui.dataView->setModel(m_dataModel);
 }
 

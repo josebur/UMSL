@@ -4,11 +4,13 @@
 #include <QAbstractTableModel>
 #include <QModelIndex>
 
+class Study;
+
 class DataTableModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    DataTableModel(QObject *parent = 0, int rows = 0, int columns = 0);
+    DataTableModel(QObject *parent = 0, Study *study = 0);
 
     // read only access
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -22,6 +24,7 @@ public:
 private:
     int m_rows;
     int m_cols;
+    Study *m_study;
 
     QList< QList<qreal> > m_data; // not sure if this is the best data structure...we'll see.
 };

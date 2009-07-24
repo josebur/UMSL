@@ -56,6 +56,11 @@ public:
     QList<AbstractScene *> scenes() const;
 
     /**
+     * Return a list of non break polling scenes.
+     */
+    QList<AbstractScene *> pollingScenes() const;
+
+    /**
      * Adds a new scene to the end of the studies
      * collection of scenes.
      */

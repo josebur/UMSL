@@ -52,6 +52,17 @@ QList<AbstractScene *> Study::scenes() const
     return m_scenes;
 }
 
+QList<AbstractScene *> Study::pollingScenes() const
+{
+    QList<AbstractScene *> scenes;
+    foreach (AbstractScene *scene, m_scenes) {
+        if (scene->pollDuringScene()) {
+            scenes.append(scene);
+        }
+    }
+    return scenes;
+}
+
 void Study::addScene(AbstractScene *scene)
 {
     m_scenes.append(scene);

@@ -1,12 +1,26 @@
 #include "datatablemodel.h"
+#include "study.h"
 
 #include <QAbstractTableModel>
 #include <QDebug>
 #include <QList>
 
-DataTableModel::DataTableModel(QObject *parent, int rows, int columns)
-    : QAbstractTableModel(parent), m_rows(rows), m_cols(columns)
+DataTableModel::DataTableModel(QObject *parent, Study *study)
+    : QAbstractTableModel(parent), m_study(study)
 {
+    if (m_study) {
+        m_rows = 8;
+        QList<AbstractScene *> scenes = m_study->pollingScenes();
+        int length = 0;
+        foreach (AbstractScene *scene, scenes) {
+            length += scene->length();
+        }
+        m_cols = length;
+    } else {
+        m_rows = 0;
+        m_cols = 0;
+    }
+
     for (int i = 0; i < m_rows; ++i) {
         QList<qreal> list;
         for (int j = 0; j < m_cols; ++j) {
