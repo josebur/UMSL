@@ -256,12 +256,12 @@ void MainWindow::startStudy()
     m_ui.studyOptionsWidget->setDisabled(true);
     if (m_currentStudy->isPaused()) {
         m_currentStudy->resume();
-        statusBar()->showMessage(m_currentStudy->name() + "Resumed", 2000);
+        statusBar()->showMessage(m_currentStudy->name() + " Resumed", 2000);
     }
     else {
         m_currentSecond = 0;
         m_currentStudy->start();
-        statusBar()->showMessage(m_currentStudy->name() + "Started", 2000);
+        statusBar()->showMessage(m_currentStudy->name() + " Started", 2000);
     }
 
     //create a new data model
