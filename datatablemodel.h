@@ -19,7 +19,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 
     // edit access
-    // TODO...
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
 
 private:
     int m_rows;

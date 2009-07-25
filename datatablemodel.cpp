@@ -66,3 +66,17 @@ QVariant DataTableModel::headerData(int section, Qt::Orientation orientation, in
     }
     return QVariant();
 }
+
+bool DataTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if (role == Qt::EditRole && index.isValid()) {
+        int row = index.row();
+        int col = index.column();
+        QList<qreal> rowValues = m_data.value(row);
+        rowValues.replace(col, value.toDouble());
+        m_data.replace(row, rowValues);
+        emit dataChanged(index, index);
+        return true;
+    }
+    return false;
+}

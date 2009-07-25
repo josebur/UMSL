@@ -314,7 +314,8 @@ void MainWindow::studyTick()
         for (int i = 0; i < m_seats.count(); ++i) {
             if (m_seats.at(i)->isChecked()) {
                 int value = m_pollingDevice.pollDevice(i);
-                qDebug() << value;
+                QModelIndex index = m_dataModel->index(i, m_currentSecond);
+                m_dataModel->setData(index, value, Qt::EditRole);
             }
         }
     }
