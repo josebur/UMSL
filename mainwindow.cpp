@@ -310,7 +310,6 @@ void MainWindow::studyTick()
                                  .arg(currentTime.toString("mm:ss"))
                                  .arg(studyTime.toString("mm:ss")));
 
-    // poll the devices (test code)
     if (m_currentStudy->currentScene()->pollDuringScene()) {
         m_pollingSecond++;
         qDebug() << m_pollingSecond;
