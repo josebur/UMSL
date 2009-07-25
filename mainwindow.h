@@ -67,6 +67,7 @@ private:
     StudyListModel *m_studyListModel;
     Study *m_currentStudy;
     int m_currentSecond;
+    int m_pollingSecond;
     QSplitter *m_page;
     QList<QCheckBox *> m_seats;
     DataTableModel *m_dataModel;

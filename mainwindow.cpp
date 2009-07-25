@@ -260,6 +260,7 @@ void MainWindow::startStudy()
     }
     else {
         m_currentSecond = 0;
+        m_pollingSecond = 0;
         m_currentStudy->start();
         statusBar()->showMessage(m_currentStudy->name() + " Started", 2000);
     }
@@ -311,10 +312,12 @@ void MainWindow::studyTick()
 
     // poll the devices (test code)
     if (m_currentStudy->currentScene()->pollDuringScene()) {
+        m_pollingSecond++;
+        qDebug() << m_pollingSecond;
         for (int i = 0; i < m_seats.count(); ++i) {
             if (m_seats.at(i)->isChecked()) {
                 int value = m_pollingDevice.pollDevice(i);
-                QModelIndex index = m_dataModel->index(i, m_currentSecond);
+                QModelIndex index = m_dataModel->index(i, m_pollingSecond-1);
                 m_dataModel->setData(index, value, Qt::EditRole);
             }
         }
