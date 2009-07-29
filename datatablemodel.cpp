@@ -58,7 +58,16 @@ QVariant DataTableModel::headerData(int section, Qt::Orientation orientation, in
             return QString("Seat %1").arg(section + 1);
         }
         else if (orientation == Qt::Horizontal) {
-            return QString("%1").arg(section + 1);
+            QList<AbstractScene *> scenes = m_study->pollingScenes();
+            int second = section+1;
+            int sceneNumber = 1;
+            foreach (AbstractScene *scene, scenes) {
+                if (second > scene->length()) {
+                    second -= scene->length();
+                    sceneNumber++;
+                }
+            }
+            return QString("S %1 %2").arg(sceneNumber).arg(second);
         }
         else {
             return QVariant();

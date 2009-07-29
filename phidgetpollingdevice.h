@@ -9,6 +9,7 @@ class PhidgetPollingDevice
 {
 public:
     PhidgetPollingDevice(MainWindow *mainWindow = 0);
+    ~PhidgetPollingDevice();
     bool init();
     int pollDevice(int index);
 

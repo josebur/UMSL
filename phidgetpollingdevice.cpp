@@ -14,6 +14,12 @@ PhidgetPollingDevice::PhidgetPollingDevice(MainWindow *mainWindow)
     m_mainWindow = mainWindow;
 }
 
+PhidgetPollingDevice::~PhidgetPollingDevice()
+{
+    CPhidget_close((CPhidgetHandle)m_handle);
+    CPhidget_delete((CPhidgetHandle)m_handle);
+}
+
 bool PhidgetPollingDevice::init()
 {
     CPhidgetInterfaceKit_create(&m_handle);
