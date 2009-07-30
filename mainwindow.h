@@ -54,6 +54,7 @@ private Q_SLOTS:
     void endStudy();
     void pauseStudy();
     void studyTick();
+    void saveDataToFile();
 
 private:
     void writeSettings();

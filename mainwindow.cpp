@@ -114,6 +114,7 @@ MainWindow::MainWindow(QWidget *parent)
             this, SLOT(setNewStudyName(int, QSqlRecord&)));
 
     // Menu connections
+    connect(m_ui.actionSaveData, SIGNAL(triggered()), this, SLOT(saveDataToFile()));
     connect(m_ui.actionEditStudyScenes, SIGNAL(triggered()), this, SLOT(editStudyScenes()));
     connect(m_ui.actionAddNewStudy, SIGNAL(triggered()), this, SLOT(addNewStudy()));
     connect(m_ui.actionRemoveStudy, SIGNAL(triggered()), this, SLOT(removeStudy()));
@@ -288,6 +289,13 @@ void MainWindow::endStudy()
 
     QModelIndex index = m_ui.studyListView->selectionModel()->currentIndex();
     studyChanged(index);
+
+    if (QMessageBox::question(this, "Save Data?", "Do you want to save the data?",
+                              QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes)
+        == QMessageBox::Yes) {
+
+        saveDataToFile();
+    }
 }
 
 void MainWindow::pauseStudy()
@@ -319,6 +327,42 @@ void MainWindow::studyTick()
                 QModelIndex index = m_dataModel->index(i, m_pollingSecond-1);
                 m_dataModel->setData(index, value, Qt::EditRole);
             }
+        }
+    }
+}
+
+void MainWindow::saveDataToFile()
+{
+    if (!m_dataModel) {
+        return;
+    }
+
+    QString filename = QFileDialog::getSaveFileName(this, "Save Data", QString(), QString());
+    if (!filename.isEmpty()) {
+        QFile data(filename);
+        if (data.open(QFile::WriteOnly | QFile::Truncate)) {
+            QTextStream out(&data);
+            int rowCount = m_dataModel->rowCount();
+            int columnCount = m_dataModel->columnCount();
+
+            // write out the header
+            out << ",";
+            for (int i = 0; i < columnCount; ++i) {
+                out << m_dataModel->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString()
+                    << ",";
+            }
+
+            out << "\n";
+
+            for (int i = 0; i < rowCount; ++i) {
+                out << "Seat " << i + 1 << ",";
+                for (int j = 0; j < columnCount; ++j) {
+                 QModelIndex index = m_dataModel->index(i, j);
+                    out << index.data(Qt::DisplayRole).toString() << ",";
+                }
+                out << "\n";
+            }
+            data.close();
         }
     }
 }
