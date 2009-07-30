@@ -32,16 +32,18 @@ bool PhidgetPollingDevice::init()
     return true;
 }
 
-int PhidgetPollingDevice::pollDevice(int index)
+qreal PhidgetPollingDevice::pollDevice(int index)
 {
     int sensorCount;
-    int value = -1;
+    int value = 5;
     CPhidgetInterfaceKit_getSensorCount(m_handle, &sensorCount);
     if (index >= 0 && index <= sensorCount) {
         CPhidgetInterfaceKit_getSensorValue(m_handle, index, &value);
     }
 
-    return value;
+    qreal realValue = value + 0.1;
+    qDebug() << value << " " << realValue;
+    return realValue;
 }
 
 void PhidgetPollingDevice::displayStats()

@@ -3,6 +3,8 @@
 
 #include "phidget21.h"
 
+#include <QtGlobal>
+
 class MainWindow;
 
 class PhidgetPollingDevice
@@ -11,7 +13,7 @@ public:
     PhidgetPollingDevice(MainWindow *mainWindow = 0);
     ~PhidgetPollingDevice();
     bool init();
-    int pollDevice(int index);
+    qreal pollDevice(int index);
 
 private:
     void displayStats();

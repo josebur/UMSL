@@ -45,7 +45,8 @@ int DataTableModel::columnCount(const QModelIndex &parent) const
 QVariant DataTableModel::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole) {
-        return m_data.at(index.row()).at(index.column());
+        qreal data = m_data.at(index.row()).at(index.column());
+        return data;
     }
 
     return QVariant();

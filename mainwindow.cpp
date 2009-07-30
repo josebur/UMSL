@@ -323,7 +323,7 @@ void MainWindow::studyTick()
         qDebug() << m_pollingSecond;
         for (int i = 0; i < m_seats.count(); ++i) {
             if (m_seats.at(i)->isChecked()) {
-                int value = m_pollingDevice.pollDevice(i);
+                qreal value = m_pollingDevice.pollDevice(i);
                 QModelIndex index = m_dataModel->index(i, m_pollingSecond-1);
                 m_dataModel->setData(index, value, Qt::EditRole);
             }
