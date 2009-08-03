@@ -2,6 +2,10 @@
 
 #include "phidget21.h"
 
+// shouldn't need these in the final version
+#include <cstdlib>
+#include <ctime>
+
 #include <QDebug>
 
 int AttachHandler(CPhidgetHandle handle, void *userptr);
@@ -12,6 +16,8 @@ PhidgetPollingDevice::PhidgetPollingDevice(MainWindow *mainWindow)
 {
     m_handle = 0;
     m_mainWindow = mainWindow;
+
+    srand(time(NULL));
 }
 
 PhidgetPollingDevice::~PhidgetPollingDevice()
@@ -35,15 +41,13 @@ bool PhidgetPollingDevice::init()
 qreal PhidgetPollingDevice::pollDevice(int index)
 {
     int sensorCount;
-    int value = 5;
+    int value = rand() % 1000; // get a random number between 0 and 1000;
     CPhidgetInterfaceKit_getSensorCount(m_handle, &sensorCount);
     if (index >= 0 && index <= sensorCount) {
         CPhidgetInterfaceKit_getSensorValue(m_handle, index, &value);
     }
 
-    qreal realValue = value + 0.1;
-    qDebug() << value << " " << realValue;
-    return realValue;
+    return mapNumber(value);
 }
 
 void PhidgetPollingDevice::displayStats()
@@ -61,6 +65,12 @@ void PhidgetPollingDevice::displayStats()
     qDebug() << name;
     qDebug() << "Serial Number: " << serialNumber << " Version: " << version;
     qDebug() << "# Sensors: " << numSensors;
+}
+
+qreal PhidgetPollingDevice::mapNumber(int value)
+{
+    qreal newValue = (qreal)value;
+    return newValue;
 }
 
 // For some reason, these needed to be in the global space to work.

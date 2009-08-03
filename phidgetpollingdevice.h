@@ -17,6 +17,7 @@ public:
 
 private:
     void displayStats();
+    qreal mapNumber(int value);
 
     MainWindow *m_mainWindow;
     CPhidgetInterfaceKitHandle m_handle;
