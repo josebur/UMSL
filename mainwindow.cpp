@@ -337,8 +337,12 @@ void MainWindow::saveDataToFile()
         return;
     }
 
-    QString filename = QFileDialog::getSaveFileName(this, "Save Data", QString(), QString());
+    QString filename = QFileDialog::getSaveFileName(this, "Save Data",
+                                                    m_currentStudy->name() + ".csv", "Comma Separated Value(*.csv)");
     if (!filename.isEmpty()) {
+        if (!filename.endsWith(".csv")) {
+            filename.append(".csv");
+        }
         QFile data(filename);
         if (data.open(QFile::WriteOnly | QFile::Truncate)) {
             QTextStream out(&data);
