@@ -17,6 +17,8 @@ PhidgetPollingDevice::PhidgetPollingDevice(MainWindow *mainWindow)
     m_handle = 0;
     m_mainWindow = mainWindow;
 
+
+
     srand(time(NULL));
 }
 
@@ -69,8 +71,9 @@ void PhidgetPollingDevice::displayStats()
 
 qreal PhidgetPollingDevice::mapNumber(int value)
 {
-    qreal newValue = (qreal)value;
-    return newValue;
+    // not sure if this is the best way ... since it does traditional rounding
+    QString newValue = QString::number((double)value / 100, 'g', 2);
+    return newValue.toDouble();
 }
 
 // For some reason, these needed to be in the global space to work.
