@@ -2,10 +2,6 @@
 
 #include "phidget21.h"
 
-// shouldn't need these in the final version
-#include <cstdlib>
-#include <ctime>
-
 #include <QDebug>
 
 int AttachHandler(CPhidgetHandle handle, void *userptr);
@@ -16,10 +12,6 @@ PhidgetPollingDevice::PhidgetPollingDevice(MainWindow *mainWindow)
 {
     m_handle = 0;
     m_mainWindow = mainWindow;
-
-
-
-    srand(time(NULL));
 }
 
 PhidgetPollingDevice::~PhidgetPollingDevice()
@@ -43,10 +35,11 @@ bool PhidgetPollingDevice::init()
 qreal PhidgetPollingDevice::pollDevice(int index)
 {
     int sensorCount;
-    int value = rand() % 1000; // get a random number between 0 and 1000;
+    int value = 0;
     CPhidgetInterfaceKit_getSensorCount(m_handle, &sensorCount);
     if (index >= 0 && index <= sensorCount) {
         CPhidgetInterfaceKit_getSensorValue(m_handle, index, &value);
+        qDebug() << "Phidget Value = " << value;
     }
 
     return mapNumber(value);

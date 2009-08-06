@@ -95,7 +95,7 @@ MainWindow::MainWindow(QWidget *parent)
         m_currentSecond = 0;
     }
 
-    m_ui.dataView->setEnabled(false);
+    m_ui.dataView->setEnabled(true);
     m_ui.pauseButton->setEnabled(false);
 
     m_pollingDevice.init();
@@ -320,7 +320,6 @@ void MainWindow::studyTick()
 
     if (m_currentStudy->currentScene()->pollDuringScene()) {
         m_pollingSecond++;
-        qDebug() << m_pollingSecond;
         for (int i = 0; i < m_seats.count(); ++i) {
             if (m_seats.at(i)->isChecked()) {
                 qreal value = m_pollingDevice.pollDevice(i);
