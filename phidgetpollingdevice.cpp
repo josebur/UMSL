@@ -39,6 +39,10 @@ qreal PhidgetPollingDevice::pollDevice(int index)
     CPhidgetInterfaceKit_getSensorCount(m_handle, &sensorCount);
     if (index >= 0 && index <= sensorCount) {
         CPhidgetInterfaceKit_getSensorValue(m_handle, index, &value);
+        /* We need the following since the rotation sensor goes lower cw and higher ccw
+           which is the opposite of what we want.
+         */
+        value = 1000 - value;
         qDebug() << "Phidget Value = " << value;
     }
 
