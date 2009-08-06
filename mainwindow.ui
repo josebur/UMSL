@@ -14,7 +14,7 @@
    <string>UMSL</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="usml.qrc">
     <normaloff>:/icons/Icons/UMSL_logo.png</normaloff>:/icons/Icons/UMSL_logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -61,7 +61,7 @@
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="usml.qrc">
            <normaloff>:/icons/Icons/player_play.png</normaloff>:/icons/Icons/player_play.png</iconset>
          </property>
          <property name="iconSize">
@@ -81,7 +81,7 @@
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="usml.qrc">
            <normaloff>:/icons/Icons/player_pause.png</normaloff>:/icons/Icons/player_pause.png</iconset>
          </property>
          <property name="iconSize">
@@ -255,7 +255,7 @@
      <x>0</x>
      <y>0</y>
      <width>1083</width>
-     <height>23</height>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -335,6 +335,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="usml.qrc"/>
+ </resources>
  <connections/>
 </ui>
