@@ -119,6 +119,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_ui.actionAddNewStudy, SIGNAL(triggered()), this, SLOT(addNewStudy()));
     connect(m_ui.actionRemoveStudy, SIGNAL(triggered()), this, SLOT(removeStudy()));
     connect(m_ui.actionQuit, SIGNAL(triggered()), this, SLOT(close()));
+
+    // Help Menu connections
+    connect(m_ui.actionAboutUMSL, SIGNAL(triggered()), this, SLOT(about()));
+    connect(m_ui.actionAboutQt, SIGNAL(triggered()), this, SLOT(aboutQt()));
 }
 
 MainWindow::~MainWindow()
@@ -368,6 +372,20 @@ void MainWindow::saveDataToFile()
             data.close();
         }
     }
+}
+
+void MainWindow::about()
+{
+    QString message("<b><c>UMSL</c></b><br>Version 1.0<br>Copyright (C) 2009 Joe Burns (josebur86@gmail.com)"
+                    "<br><br>The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRANTY"
+                    "OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.");
+
+    QMessageBox::about(this, "About UMSL", message);
+}
+
+void MainWindow::aboutQt()
+{
+    QMessageBox::aboutQt(this, "About Qt");
 }
 
 void MainWindow::writeSettings()

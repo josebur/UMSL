@@ -55,6 +55,8 @@ private Q_SLOTS:
     void pauseStudy();
     void studyTick();
     void saveDataToFile();
+    void about();
+    void aboutQt();
 
 private:
     void writeSettings();
