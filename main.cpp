@@ -78,7 +78,7 @@ bool importDatabase(const QString &filename)
 
 int main(int argc, char *argv[])
 {
-    QApplication::setStyle("cleanlooks");
+    //QApplication::setStyle("cleanlooks");
     QApplication a(argc, argv);
 
     a.setOrganizationName("UMSL");

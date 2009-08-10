@@ -1,6 +1,5 @@
 TODO
 ----
-* Polling Class
 * Poll Every Second ... Don't worry about averaging yet.
 * Two Files ... Raw Data and then optional averaging data.
 * How to handle scenes that that aren't divisable by averaging interval?
@@ -76,3 +75,5 @@ After the 1.0 Release
 
 * Use either a different method for showing the current progress of the study
   or smooth the animation of the timeline indicator.
+* Create a temp file for storage of the data after the study has been run
+  but the user hasn't saved it yet. Auto-recovery.
