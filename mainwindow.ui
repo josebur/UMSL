@@ -255,7 +255,7 @@
      <x>0</x>
      <y>0</y>
      <width>1083</width>
-     <height>28</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -332,6 +332,9 @@
   <action name="actionSaveData">
    <property name="text">
     <string>Save Data</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionAboutUMSL">
