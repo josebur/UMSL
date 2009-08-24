@@ -392,7 +392,7 @@ void MainWindow::saveDataToFile()
 void MainWindow::about()
 {
     QString message("<b><c>UMSL</c></b><br>Version 1.0<br>Copyright (C) 2009 Joe Burns (josebur86@gmail.com)"
-                    "<br><br>The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRANTY"
+                    "<br><br>The program is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE WARRANTY "
                     "OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.");
 
     QMessageBox::about(this, "About UMSL", message);
