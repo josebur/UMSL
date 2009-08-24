@@ -255,7 +255,7 @@ void MainWindow::startStudy()
         return;
     }
 
-    if (m_currentStudy && !m_dataSaved) {
+    if (m_currentStudy && !m_currentStudy->isPaused() && !m_dataSaved) {
         int ret = QMessageBox::warning(this, "Study Data Not Saved", "Study data has not been saved.\n"
                                        "Continue without saving?", QMessageBox::Yes | QMessageBox::No,
                                        QMessageBox::No);
@@ -279,16 +279,16 @@ void MainWindow::startStudy()
         m_pollingSecond = 0;
         m_currentStudy->start();
         statusBar()->showMessage(m_currentStudy->name() + " Started", 2000);
-    }
 
-    //create a new data model
-    if (m_dataModel) {
-        delete m_dataModel;
+        //create a new data model
+        if (m_dataModel) {
+            delete m_dataModel;
+        }
+        m_dataModel = new DataTableModel(this, m_currentStudy);
+        m_ui.dataView->setModel(m_dataModel);
+        m_ui.actionSaveData->setEnabled(true);
+        m_dataSaved = false;
     }
-    m_dataModel = new DataTableModel(this, m_currentStudy);
-    m_ui.dataView->setModel(m_dataModel);
-    m_ui.actionSaveData->setEnabled(true);
-    m_dataSaved = false;
 }
 
 void MainWindow::endStudy()
