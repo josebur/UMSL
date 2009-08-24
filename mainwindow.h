@@ -75,6 +75,7 @@ private:
     QList<QCheckBox *> m_seats;
     DataTableModel *m_dataModel;
     PhidgetPollingDevice m_pollingDevice;
+    bool m_dataSaved;
     Ui::MainWindow m_ui;
 };
 

@@ -87,6 +87,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_currentStudy = 0;
     m_dataModel = 0;
+    m_dataSaved = true;
 
     QModelIndex index = m_studyListModel->index(0, 1);
     if (index.isValid()) {
@@ -97,6 +98,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_ui.dataView->setEnabled(true);
     m_ui.pauseButton->setEnabled(false);
+    m_ui.actionSaveData->setDisabled(true);
 
     m_pollingDevice.init();
 
@@ -253,6 +255,15 @@ void MainWindow::startStudy()
         return;
     }
 
+    if (m_currentStudy && !m_dataSaved) {
+        int ret = QMessageBox::warning(this, "Study Data Not Saved", "Study data has not been saved.\n"
+                                       "Continue without saving?", QMessageBox::Yes | QMessageBox::No,
+                                       QMessageBox::No);
+        if (ret == QMessageBox::No) {
+            return;
+        }
+    }
+
     m_ui.playButton->setDisabled(true);
     m_ui.pauseButton->setEnabled(true);
     m_ui.studyListView->setDisabled(true);
@@ -276,6 +287,8 @@ void MainWindow::startStudy()
     }
     m_dataModel = new DataTableModel(this, m_currentStudy);
     m_ui.dataView->setModel(m_dataModel);
+    m_ui.actionSaveData->setEnabled(true);
+    m_dataSaved = false;
 }
 
 void MainWindow::endStudy()
@@ -294,7 +307,7 @@ void MainWindow::endStudy()
     QModelIndex index = m_ui.studyListView->selectionModel()->currentIndex();
     studyChanged(index);
 
-    if (QMessageBox::question(this, "Save Data?", "Do you want to save the data?",
+    if (QMessageBox::question(this, "Save Data?", "Do you want to save the study data?",
                               QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes)
         == QMessageBox::Yes) {
 
@@ -343,6 +356,8 @@ void MainWindow::saveDataToFile()
     QString filename = QFileDialog::getSaveFileName(this, "Save Data",
                                                     m_currentStudy->name() + ".csv", "Comma Separated Value(*.csv)");
     if (!filename.isEmpty()) {
+        m_dataSaved = true;
+
         if (!filename.endsWith(".csv")) {
             filename.append(".csv");
         }
