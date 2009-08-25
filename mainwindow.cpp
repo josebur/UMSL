@@ -105,6 +105,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Button connections
     connect(m_ui.playButton, SIGNAL(clicked()), this, SLOT(startStudy()));
     connect(m_ui.pauseButton, SIGNAL(clicked()), this, SLOT(pauseStudy()));
+    connect(m_ui.averageCheckBox, SIGNAL(toggled(bool)), m_ui.averageSpinBox, SLOT(setEnabled(bool)));
 
     // Study connections
     connect(m_studyListModel, SIGNAL(dataChanged(const QModelIndex, const QModelIndex)),
@@ -425,6 +426,7 @@ void MainWindow::writeSettings()
         ++i;
     }
     settings.setValue("seatsChecked", seats);
+    settings.setValue("averageEnabled", m_ui.averageCheckBox->isChecked());
     settings.setValue("averageInterval", m_ui.averageSpinBox->value());
 }
 
@@ -447,7 +449,9 @@ void MainWindow::readSettings()
        }
    }
 
+   m_ui.averageCheckBox->setChecked(settings.value("averageEnabled").toBool());
    m_ui.averageSpinBox->setValue(settings.value("averageInterval", 1).toInt());
+   m_ui.averageSpinBox->setEnabled(m_ui.averageCheckBox->isChecked());
 }
 
 bool MainWindow::connectToDatabase()
