@@ -26,7 +26,7 @@ private:
     int m_cols;
     Study *m_study;
 
-    QList< QList<qreal> > m_data; // not sure if this is the best data structure...we'll see.
+    QList< QList<qreal> > m_data;
 };
 
 #endif // DATATABLEMODEL_H
