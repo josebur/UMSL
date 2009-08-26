@@ -66,6 +66,12 @@ On App Close
 ------------
 I'll need to call CPhidget_close() and CPhidget_delete()
 
+Values
+------
+0.0 - 10.0
+
+0 - 1000
+
 After the 1.0 Release
 ---------------------
 * Make a separate UI to import/export the database.

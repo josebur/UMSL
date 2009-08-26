@@ -68,9 +68,10 @@ void PhidgetPollingDevice::displayStats()
 
 qreal PhidgetPollingDevice::mapNumber(int value)
 {
-    // not sure if this is the best way ... since it does traditional rounding
-    QString newValue = QString::number((double)value / 100, 'g', 2);
-    return newValue.toDouble();
+    qreal newValue = (double)value / 100;
+    int precision = (newValue < 1.0) ? 1 : 2;
+    QString v = QString::number(newValue, 'g', precision);
+    return v.toDouble();
 }
 
 // For some reason, these needed to be in the global space to work.
