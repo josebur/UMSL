@@ -135,8 +135,19 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    writeSettings();
-    event->accept();
+    if (!m_dataSaved) {
+        int ret = QMessageBox::warning(this, "Study Data Not Saved", "Study data has not been saved.\n"
+                                       "Quit without saving?", QMessageBox::Yes | QMessageBox::No,
+                                       QMessageBox::No);
+        if (ret == QMessageBox::No) {
+            saveDataToFile();
+            event->ignore();
+        }
+    }
+    else {
+        writeSettings();
+        event->accept();
+    }
 }
 
 void MainWindow::addNewStudy()
