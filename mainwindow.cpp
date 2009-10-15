@@ -105,7 +105,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Button connections
     connect(m_ui.playButton, SIGNAL(clicked()), this, SLOT(startStudy()));
     connect(m_ui.pauseButton, SIGNAL(clicked()), this, SLOT(pauseStudy()));
-    connect(m_ui.averageCheckBox, SIGNAL(toggled(bool)), m_ui.averageSpinBox, SLOT(setEnabled(bool)));
+    //connect(m_ui.averageCheckBox, SIGNAL(toggled(bool)), m_ui.averageSpinBox, SLOT(setEnabled(bool)));
 
     // Study connections
     connect(m_studyListModel, SIGNAL(dataChanged(const QModelIndex, const QModelIndex)),
@@ -260,8 +260,8 @@ void MainWindow::showStudyMenu(QPoint point)
 
 void MainWindow::startStudy()
 {
-    qDebug() << "startStudy called\n"
-             << "average every " << m_ui.averageSpinBox->value() << " seconds";
+    qDebug() << "startStudy called\n";
+             //<< "average every " << m_ui.averageSpinBox->value() << " seconds";
 
     if (!m_currentStudy) {
         return;
@@ -280,7 +280,7 @@ void MainWindow::startStudy()
     m_ui.pauseButton->setEnabled(true);
     m_ui.studyListView->setDisabled(true);
     m_ui.menuStudy->setDisabled(true);
-    m_ui.averageSpinBox->setDisabled(true);
+    //m_ui.averageSpinBox->setDisabled(true);
     m_ui.studyOptionsWidget->setDisabled(true);
     if (m_currentStudy->isPaused()) {
         m_currentStudy->resume();
@@ -309,7 +309,7 @@ void MainWindow::endStudy()
     m_ui.pauseButton->setEnabled(false);
     m_ui.studyListView->setEnabled(true);
     m_ui.menuStudy->setEnabled(true);
-    m_ui.averageSpinBox->setEnabled(true);
+    //m_ui.averageSpinBox->setEnabled(true);
     m_ui.studyOptionsWidget->setEnabled(true);
     m_ui.dataView->setEnabled(true);
 
@@ -437,8 +437,8 @@ void MainWindow::writeSettings()
         ++i;
     }
     settings.setValue("seatsChecked", seats);
-    settings.setValue("averageEnabled", m_ui.averageCheckBox->isChecked());
-    settings.setValue("averageInterval", m_ui.averageSpinBox->value());
+    //settings.setValue("averageEnabled", m_ui.averageCheckBox->isChecked());
+    //settings.setValue("averageInterval", m_ui.averageSpinBox->value());
 }
 
 void MainWindow::readSettings()
@@ -460,9 +460,9 @@ void MainWindow::readSettings()
        }
    }
 
-   m_ui.averageCheckBox->setChecked(settings.value("averageEnabled").toBool());
-   m_ui.averageSpinBox->setValue(settings.value("averageInterval", 1).toInt());
-   m_ui.averageSpinBox->setEnabled(m_ui.averageCheckBox->isChecked());
+   //m_ui.averageCheckBox->setChecked(settings.value("averageEnabled").toBool());
+   //m_ui.averageSpinBox->setValue(settings.value("averageInterval", 1).toInt());
+   //m_ui.averageSpinBox->setEnabled(m_ui.averageCheckBox->isChecked());
 }
 
 bool MainWindow::connectToDatabase()
