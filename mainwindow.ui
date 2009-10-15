@@ -36,7 +36,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QListView" name="studyListView"/>
+      <widget class="QListView" name="studyListView">
+       <property name="editTriggers">
+        <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
