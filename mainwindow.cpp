@@ -194,17 +194,7 @@ void MainWindow::removeStudy()
 void MainWindow::setNewStudyName(int row, QSqlRecord &record)
 {
     Q_UNUSED(row);
-
-//    QModelIndex begin = m_studyListModel->index(0, 1);
-//    if (begin.isValid()) {
-//        QModelIndexList list = m_studyListModel->match(begin, Qt::DisplayRole, "New Study",
-//                                                       -1);
-//        const int n = list.count();
-//        record.setValue(1, QString("New Study %1").arg(n+1));
-//    }
-//    else {
-        record.setValue(1, "Enter a new study name");
-    //}
+    record.setValue(1, "Enter a new study name");
 }
 
 void MainWindow::editStudyScenes()
