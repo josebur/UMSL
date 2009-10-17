@@ -135,6 +135,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    // TODO: Client wants to be bugged one more time before exiting
+    // "The data will *NOT* be saved! Are you sure you want to quit?"
     if (!m_dataSaved) {
         int ret = QMessageBox::warning(this, "Study Data Not Saved", "Study data has not been saved.\n"
                                        "Quit without saving?", QMessageBox::Yes | QMessageBox::No,
@@ -355,6 +357,7 @@ void MainWindow::saveDataToFile()
         return;
     }
 
+    // TODO: Filename should be the current date and time
     QString filename = QFileDialog::getSaveFileName(this, "Save Data",
                                                     m_currentStudy->name() + ".csv", "Comma Separated Value(*.csv)");
     if (!filename.isEmpty()) {

@@ -71,6 +71,7 @@ QVariant DataTableModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+// FIXME: The horizontal header isn't working right
 QVariant DataTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole) {
