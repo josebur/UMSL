@@ -139,12 +139,25 @@ void MainWindow::closeEvent(QCloseEvent *event)
         int ret = QMessageBox::warning(this, "Study Data Not Saved", "Study data has not been saved.\n"
                                        "Quit without saving?", QMessageBox::Yes | QMessageBox::No,
                                        QMessageBox::No);
+
         if (ret == QMessageBox::No) {
             saveDataToFile();
             event->ignore();
+        } else {
+            // warn again
+            int sure = QMessageBox::warning(this, "Study Data <b>Not</b> Saved", "Study data has <b>not</b> been saved.\n"
+                                       "Are you sure you want to quit without saving?", QMessageBox::Yes | QMessageBox::No,
+                                       QMessageBox::No);
+            if (sure == QMessageBox::No) {
+                saveDataToFile();
+                event->ignore();
+            } else {
+                writeSettings();
+                event->accept();
+            }
         }
     }
-    else {
+    else { 
         writeSettings();
         event->accept();
     }
