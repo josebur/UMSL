@@ -71,7 +71,6 @@ QVariant DataTableModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-// FIXME: The horizontal header isn't working right
 QVariant DataTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role == Qt::DisplayRole) {
@@ -79,16 +78,17 @@ QVariant DataTableModel::headerData(int section, Qt::Orientation orientation, in
             return QString("Seat %1").arg(section + 1);
         }
         else if (orientation == Qt::Horizontal) {
-            QList<AbstractScene *> scenes = m_study->pollingScenes();
-            int second = section+1;
-            int sceneNumber = 1;
-            foreach (AbstractScene *scene, scenes) {
-                if (second > scene->length()) {
-                    second -= scene->length();
-                    sceneNumber++;
-                }
-            }
-            return QString("S %1 %2").arg(sceneNumber).arg(second);
+//            QList<AbstractScene *> scenes = m_study->pollingScenes();
+//            int second = section+1;
+//            int sceneNumber = 1;
+//            foreach (AbstractScene *scene, scenes) {
+//                if (second > scene->length()) {
+//                    second -= scene->length();
+//                    sceneNumber++;
+//                }
+//            }
+//            return QString("Scene %1:%2").arg(sceneNumber).arg(second);
+            return QString("Second %1").arg(section+1);
         }
         else {
             return QVariant();
