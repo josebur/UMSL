@@ -135,18 +135,29 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    // TODO: Client wants to be bugged one more time before exiting
-    // "The data will *NOT* be saved! Are you sure you want to quit?"
     if (!m_dataSaved) {
         int ret = QMessageBox::warning(this, "Study Data Not Saved", "Study data has not been saved.\n"
                                        "Quit without saving?", QMessageBox::Yes | QMessageBox::No,
                                        QMessageBox::No);
+
         if (ret == QMessageBox::No) {
             saveDataToFile();
             event->ignore();
+        } else {
+            // warn again
+            int sure = QMessageBox::warning(this, "Study Data Not Saved", "Study data has <b>not</b> been saved.\n"
+                                       "Are you sure you want to quit without saving?", QMessageBox::Yes | QMessageBox::No,
+                                       QMessageBox::No);
+            if (sure == QMessageBox::No) {
+                saveDataToFile();
+                event->ignore();
+            } else {
+                writeSettings();
+                event->accept();
+            }
         }
     }
-    else {
+    else { 
         writeSettings();
         event->accept();
     }
@@ -357,9 +368,15 @@ void MainWindow::saveDataToFile()
         return;
     }
 
-    // TODO: Filename should be the current date and time
+    QString suggestedFilename = m_currentStudy->name() + "-";
+    suggestedFilename += QDate::currentDate().toString() + "-";
+    suggestedFilename += QTime::currentTime().toString();
+    suggestedFilename.remove(QChar(' '), Qt::CaseInsensitive);
+    suggestedFilename += ".csv";
+    qDebug() << suggestedFilename;
+
     QString filename = QFileDialog::getSaveFileName(this, "Save Data",
-                                                    m_currentStudy->name() + ".csv", "Comma Separated Value(*.csv)");
+                                                    suggestedFilename, "Comma Separated Value(*.csv)");
     if (!filename.isEmpty()) {
         m_dataSaved = true;
 
