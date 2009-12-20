@@ -83,7 +83,7 @@ QVariant DataTableModel::headerData(int section, Qt::Orientation orientation, in
 //            int sceneNumber = 1;
 //            foreach (AbstractScene *scene, scenes) {
 //                if (second > scene->length()) {
-//                    second -= scene->length();
+//                    totalSeconds += scene->length();
 //                    sceneNumber++;
 //                }
 //            }

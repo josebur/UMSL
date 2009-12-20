@@ -58,6 +58,7 @@ qreal PhidgetPollingDevice::pollDevice(int index)
     CPhidgetInterfaceKit_getSensorCount(m_handle, &sensorCount);
     if (index >= 0 && index <= sensorCount) {
         CPhidgetInterfaceKit_getSensorValue(m_handle, index, &value);
+        value = 1000 - value;
         qDebug() << "Phidget Value = " << value;
     }
 

@@ -368,7 +368,9 @@ void MainWindow::saveDataToFile()
         return;
     }
 
-    QString suggestedFilename = m_currentStudy->name() + "-";
+    QString documentLocation = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)
+                               + "/";
+    QString suggestedFilename = documentLocation + m_currentStudy->name() + "-";
     suggestedFilename += QDate::currentDate().toString() + "-";
     suggestedFilename += QTime::currentTime().toString();
     suggestedFilename.remove(QChar(' '), Qt::CaseInsensitive);
